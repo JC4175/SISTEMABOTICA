@@ -5,6 +5,7 @@
 package Vista;
 
 import Controlador.VentaControlador;
+import Modelo.DetalleVenta;
 import Modelo.Medicamento;
 import javax.swing.table.DefaultTableModel;
 
@@ -113,8 +114,6 @@ public class VentaForm extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setText("Código de Medicamento");
-
-        txtcodigomedicamento.setText("jTextField1");
 
         btnbuscarventa.setText("Buscar");
         btnbuscarventa.addActionListener(this::btnbuscarventaActionPerformed);
@@ -327,11 +326,48 @@ public class VentaForm extends javax.swing.JInternalFrame {
         String codigo = txtcodigomedicamento.getText().trim();
         String cantidad = txtcantidad.getText().trim();
         
+        String resultado = controlador.agregarDetalle(codigo, cantidad);
         
+        if (!resultado.equals("ok"))
+        {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                resultado, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            
+            return;
+        }
+        
+        // Refresca la tabla desde los detalles actuales
+        modelo.setRowCount(0);
+        for (DetalleVenta d : controlador.getVentaActual().getDetalles()) {
+            modelo.addRow(new Object[]{
+                d.getCodigoMedicamento(),
+                d.getNombreMedicamento(),
+                d.getCantidad(),
+                String.format("S/ %.2f", d.getPrecioUnitario()),
+                String.format("S/ %.2f", d.getSubtotal())
+            });
+        }
+        actualizaTotal();
+        txtcantidad.setText("");
+        txtcodigomedicamento.setText("");
+        lblnombremedicamento.setText("-");
+        lblstockdisponible.setText("-");
+        lblpreciounitario.setText("-");
     }//GEN-LAST:event_btnagregarventaActionPerformed
 
     private void btncancelarventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelarventaActionPerformed
-        // TODO add your handling code here:
+        int confirmar = javax.swing.JOptionPane.showConfirmDialog(this,"Desea Cancelar ? Perdera los productos agregados",
+                "CAncelar Venta", javax.swing.JOptionPane.YES_NO_OPTION);
+        
+        if (confirmar == javax.swing.JOptionPane.YES_OPTION)
+        {
+            controlador.cancelarVenta();
+            modelo.setRowCount(0);
+            controlador.nuevaVenta();
+            lblIdVenta.setText(controlador.getVentaActual().getIDVenta());
+            lblFechaventa.setText(controlador.getVentaActual().getFechaVenta());
+            lblTotal.setText("S/ 0.00");
+        }
     }//GEN-LAST:event_btncancelarventaActionPerformed
 
     private void btnbuscarventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarventaActionPerformed
@@ -362,7 +398,31 @@ public class VentaForm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnbuscarventaActionPerformed
 
     private void btnconfirmarventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnconfirmarventaActionPerformed
-        // TODO add your handling code here:
+        if (modelo.getRowCount() == 0) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "Agregue al menos un producto antes de confirmar.");
+            return;
+        }
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this,
+            "¿Confirmar la venta por " + lblTotal.getText() + "?",
+            "Confirmar venta", javax.swing.JOptionPane.YES_NO_OPTION);
+
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            String resultado = controlador.confirmarVenta();
+            if (resultado.startsWith("ok")) {
+                String id = resultado.split(":")[1];
+                javax.swing.JOptionPane.showMessageDialog(this,
+                    "✅ Venta " + id + " registrada correctamente.");
+                modelo.setRowCount(0);
+                controlador.nuevaVenta();
+                lblIdVenta.setText(controlador.getVentaActual().getIDVenta());
+                lblFechaventa.setText(controlador.getVentaActual().getFechaVenta());
+                lblTotal.setText("S/ 0.00");
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                    resultado, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_btnconfirmarventaActionPerformed
 
 

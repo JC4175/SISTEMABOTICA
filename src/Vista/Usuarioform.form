@@ -228,7 +228,7 @@
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="txtcodigo" max="32767" attributes="0"/>
                                   <Component id="txtnombre" max="32767" attributes="0"/>
-                                  <Component id="pcontraseña" max="32767" attributes="0"/>
+                                  <Component id="pcontrasena" max="32767" attributes="0"/>
                                   <Component id="cmbrol" min="-2" pref="200" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -257,7 +257,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="pcontraseña" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="pcontrasena" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -307,7 +307,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtnombreActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JPasswordField" name="pcontrase&#xf1;a">
+            <Component class="javax.swing.JPasswordField" name="pcontrasena">
             </Component>
             <Component class="javax.swing.JComboBox" name="cmbrol">
               <Properties>
@@ -328,11 +328,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Nuevo"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnnuevoActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnGuardar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Guardar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnEditar">
               <Properties>
@@ -346,11 +352,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Eliminar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnLimpiar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Limpiar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLimpiarActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
