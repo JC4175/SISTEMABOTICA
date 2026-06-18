@@ -49,6 +49,8 @@ public class Usuarioform extends javax.swing.JInternalFrame {
         btnEliminar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
 
+        setClosable(true);
+
         jPanel2.setBackground(new java.awt.Color(255, 153, 0));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -80,7 +82,7 @@ public class Usuarioform extends javax.swing.JInternalFrame {
                 .addGap(2, 2, 2))
         );
 
-        jPanel3.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel3.setText("LISTA DE USUARIOS");
 
@@ -121,7 +123,7 @@ public class Usuarioform extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel4.setText("Código");
 

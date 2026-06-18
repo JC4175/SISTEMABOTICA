@@ -8,11 +8,11 @@ package Modelo;
  *
  * @author zakkc
  */
-public class Categoría {
+public class Categoria {
     private String IDcategoria;
     private String nombre;
 
-    public Categoría(String IDcategoria, String nombre) {
+    public Categoria(String IDcategoria, String nombre) {
         this.IDcategoria = IDcategoria;
         this.nombre = nombre;
     }

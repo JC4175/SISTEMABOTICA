@@ -48,7 +48,9 @@ public class proveedorForm extends javax.swing.JInternalFrame {
         btnEliminarProv = new javax.swing.JButton();
         btnLimpiarProv = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(601, 571));
+        setClosable(true);
+        setMaximizable(true);
+        setResizable(true);
 
         jPanel2.setBackground(new java.awt.Color(51, 153, 255));
 
@@ -100,7 +102,7 @@ public class proveedorForm extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tblProveeedor);
         tblProveeedor.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        jPanel3.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel4.setText("ID");
 

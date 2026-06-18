@@ -22,7 +22,7 @@ public class Venta {
     //formato de fecha a usar 
     private static final DateTimeFormatter FORMATO = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public Venta(String IDVenta, String fechaVenta, double total, String codigoUsuario, ArrayList<DetalleVenta> detalles) {
+    public Venta(String IDVenta, String fechaVenta) {
         this.IDVenta = IDVenta;
         this.fechaVenta = LocalDate.now().format(FORMATO);
         this.total = total;

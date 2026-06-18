@@ -48,6 +48,8 @@ public class ReporteForm extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblreportes = new javax.swing.JTable();
 
+        setClosable(true);
+
         jPanel1.setBackground(new java.awt.Color(112, 48, 140));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -154,7 +156,7 @@ public class ReporteForm extends javax.swing.JInternalFrame {
         btnexportar.setText("Exportar TXT");
         btnexportar.addActionListener(this::btnexportarActionPerformed);
 
-        jPanel3.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         tblreportes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

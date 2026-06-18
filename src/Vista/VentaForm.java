@@ -57,6 +57,8 @@ public class VentaForm extends javax.swing.JInternalFrame {
         btnconfirmarventa = new javax.swing.JButton();
         btncancelarventa = new javax.swing.JButton();
 
+        setClosable(true);
+
         jPanel4.setBackground(new java.awt.Color(25, 135, 84));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -88,7 +90,7 @@ public class VentaForm extends javax.swing.JInternalFrame {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setText("Código de Medicamento");
 
@@ -164,7 +166,7 @@ public class VentaForm extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         tbldetalleventa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -210,7 +212,7 @@ public class VentaForm extends javax.swing.JInternalFrame {
                 .addGap(19, 19, 19))
         );
 
-        jPanel5.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel11.setText("Total :       S/");
 

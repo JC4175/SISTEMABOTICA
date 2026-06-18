@@ -24,6 +24,10 @@ public class DetalleVenta {
         this.precioUnitario = precioUnitario;
         this.subtotal = cantidad * precioUnitario; //hacemos el calculo
     }
+
+    public DetalleVenta(String codigo, String nombre, int cantidad, double precio) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     
 
