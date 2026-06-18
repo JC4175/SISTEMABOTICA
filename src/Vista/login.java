@@ -131,7 +131,30 @@ public class login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarsesionActionPerformed
-        // TODO add your handling code here:
+        String codigo = txtusuariologin.getText().trim();
+        String contrasena = new String(txtcontrasena.getPassword()).trim();
+        
+        if (codigo.isEmpty()|| contrasena.isEmpty()) 
+        {
+            lblavisologin.setText("⚠ Complete todos los campos.");
+            lblavisologin.setForeground(new java.awt.Color(255, 80, 80));
+            return;            
+        }
+        
+        Controlador.UsuarioControlador uc = new Controlador.UsuarioControlador();
+        Modelo.Usuario u = uc.login(codigo, contrasena);
+        
+        if (u == null) 
+        {
+        lblavisologin.setText("❌ Usuario o contraseña incorrectos.");
+        lblavisologin.setForeground(new java.awt.Color(255, 80, 80));
+        return;
+        }
+        
+        Controlador.SesionControlador.iniciarSesion(u);
+        Escritorio escritorio = new Escritorio();
+        escritorio.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnIniciarsesionActionPerformed
 
     /**

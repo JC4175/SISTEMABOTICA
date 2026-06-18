@@ -18,8 +18,31 @@ public class Escritorio extends javax.swing.JFrame {
     public Escritorio() {
         initComponents();
         //this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        configurarSegunRol();
+        actualizarStatusBar();
     }
+    
+    private void configurarSegunRol() {
+    // Ocultar Usuarios si no es Titular Gerente
+    mUsuarios.setVisible(Controlador.SesionControlador.esTitularGerente());
+    }
+    
+    private void actualizarStatusBar() {
+    Modelo.Usuario u = Controlador.SesionControlador.getUsuarioActivo();
+    jLabel1.setText("👤 " + u.getNombre() + "  |  🛡 " + u.getRol());
 
+    Controlador.MedicamentoControlador mc = new Controlador.MedicamentoControlador();
+    int alertas = mc.contarProximosVencer();
+    if (alertas > 0) {
+        jLabel2.setText("⚠ " + alertas + " medicamentos próximos a vencer");
+        jLabel2.setForeground(new java.awt.Color(255, 153, 0));
+    } else {
+        jLabel2.setText("✅ Sin alertas de vencimiento");
+        jLabel2.setForeground(new java.awt.Color(100, 200, 100));
+    }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -120,44 +143,58 @@ public class Escritorio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    //-------------------------------------METODOS PARA LLAMAR A LAS VENTANAS :)
+    private void abrirVentana(javax.swing.JInternalFrame ventana) 
+    {
+        for (javax.swing.JInternalFrame v : pEscritorio.getAllFrames()) 
+        {
+            if (v.getClass() == ventana.getClass()) 
+            {
+                v.toFront();
+                try { v.setSelected(true); } catch (Exception e) {}
+                return;
+            }
+        }
+    pEscritorio.add(ventana);
+    ventana.setVisible(true);
+    }
+    
+    
+    //---------------------------------------------------------------------------
     private void mMedicamentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mMedicamentosMouseClicked
-        Medicamentos m = new Medicamentos();
-        pEscritorio.add(m);
-        m.show();        // TODO add your handling code here:
+        abrirVentana(new Medicamentos());       // TODO add your handling code here:
     }//GEN-LAST:event_mMedicamentosMouseClicked
 
     private void mVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mVentasMouseClicked
         // TODO add your handling code here:
-        VentaForm vf = new VentaForm();
-        pEscritorio.add(vf);
-        vf.show();
+        abrirVentana(new VentaForm());
     }//GEN-LAST:event_mVentasMouseClicked
 
     private void mReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mReportesMouseClicked
-        ReporteForm rf =  new ReporteForm();
-        pEscritorio.add(rf);
-        rf.show();        // TODO add your handling code here:
+        abrirVentana(new ReporteForm());       // TODO add your handling code here:
     }//GEN-LAST:event_mReportesMouseClicked
 
     private void mProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mProveedoresMouseClicked
         // TODO add your handling code here:
-        proveedorForm pf = new proveedorForm();
-        pEscritorio.add(pf);
-        pf.show();
+        abrirVentana(new proveedorForm());
     }//GEN-LAST:event_mProveedoresMouseClicked
 
     private void mUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mUsuariosMouseClicked
-        // TODO add your handling code here:
-        Usuarioform uf = new Usuarioform();
-        pEscritorio.add(uf);
-        uf.show();
+        if (!Controlador.SesionControlador.esTitularGerente())
+        {
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Acceso denegado. Solo el Titular Gerente puede gestionar usuarios.",
+            "Sin permiso", javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+        }
+        abrirVentana(new Usuarioform());
     }//GEN-LAST:event_mUsuariosMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+    //METODO PARA 
+    
+    
+    public static void main(String args[]) 
+    {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -177,7 +214,8 @@ public class Escritorio extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new Escritorio().setVisible(true));
-    }
+     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
