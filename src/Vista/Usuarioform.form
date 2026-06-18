@@ -305,9 +305,6 @@
               </Events>
             </Component>
             <Component class="javax.swing.JPasswordField" name="pcontrase&#xf1;a">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jPasswordField1"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="cmbrol">
               <Properties>

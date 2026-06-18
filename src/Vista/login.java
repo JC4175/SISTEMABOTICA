@@ -59,8 +59,6 @@ public class login extends javax.swing.JFrame {
 
         lblavisologin.setText("🔒 Acceso restringido al personal autorizado");
 
-        txtcontrasena.setText("jPasswordField1");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(

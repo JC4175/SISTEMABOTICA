@@ -211,8 +211,8 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
@@ -227,14 +227,13 @@
                                   <Component id="txtTelefonoProv" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="btnregistrarprov" pref="299" max="32767" attributes="0"/>
                                   <Component id="btnguardarprov" max="32767" attributes="0"/>
                                   <Component id="btneditarprov" max="32767" attributes="0"/>
                                   <Component id="btnEliminarProv" max="32767" attributes="0"/>
-                                  <Component id="btnLimpiarProv" max="32767" attributes="0"/>
+                                  <Component id="btnLimpiarProv" min="-2" pref="299" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -260,9 +259,7 @@
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtTelefonoProv" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                      <Component id="btnregistrarprov" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Component id="btnguardarprov" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btneditarprov" min="-2" max="-2" attributes="0"/>
@@ -296,11 +293,6 @@
             <Component class="javax.swing.JTextField" name="txtNombreProv">
             </Component>
             <Component class="javax.swing.JTextField" name="txtTelefonoProv">
-            </Component>
-            <Component class="javax.swing.JButton" name="btnregistrarprov">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Registrar"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnguardarprov">
               <Properties>

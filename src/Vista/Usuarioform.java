@@ -133,8 +133,6 @@ public class Usuarioform extends javax.swing.JInternalFrame {
 
         txtnombre.addActionListener(this::txtnombreActionPerformed);
 
-        pcontraseña.setText("jPasswordField1");
-
         cmbrol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnnuevo.setText("Nuevo");

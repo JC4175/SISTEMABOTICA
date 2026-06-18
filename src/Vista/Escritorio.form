@@ -41,11 +41,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="\ud83d\ude9a Proveedores" containsInvalidXMLChars="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mProveedoresMouseClicked"/>
+          </Events>
         </Menu>
         <Menu class="javax.swing.JMenu" name="mUsuarios">
           <Properties>
             <Property name="text" type="java.lang.String" value="\ud83d\udc65 Usuarios" containsInvalidXMLChars="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mUsuariosMouseClicked"/>
+          </Events>
         </Menu>
       </SubComponents>
     </Menu>

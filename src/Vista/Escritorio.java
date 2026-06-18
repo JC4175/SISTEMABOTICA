@@ -101,9 +101,19 @@ public class Escritorio extends javax.swing.JFrame {
         mbMenu.add(mReportes);
 
         mProveedores.setText("🚚 Proveedores");
+        mProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mProveedoresMouseClicked(evt);
+            }
+        });
         mbMenu.add(mProveedores);
 
         mUsuarios.setText("👥 Usuarios");
+        mUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mUsuariosMouseClicked(evt);
+            }
+        });
         mbMenu.add(mUsuarios);
 
         setJMenuBar(mbMenu);
@@ -129,6 +139,20 @@ public class Escritorio extends javax.swing.JFrame {
         pEscritorio.add(rf);
         rf.show();        // TODO add your handling code here:
     }//GEN-LAST:event_mReportesMouseClicked
+
+    private void mProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mProveedoresMouseClicked
+        // TODO add your handling code here:
+        proveedorForm pf = new proveedorForm();
+        pEscritorio.add(pf);
+        pf.show();
+    }//GEN-LAST:event_mProveedoresMouseClicked
+
+    private void mUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mUsuariosMouseClicked
+        // TODO add your handling code here:
+        Usuarioform uf = new Usuarioform();
+        pEscritorio.add(uf);
+        uf.show();
+    }//GEN-LAST:event_mUsuariosMouseClicked
 
     /**
      * @param args the command line arguments
