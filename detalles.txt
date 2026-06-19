@@ -1,0 +1,5 @@
+V0001|null|null|2|0.0|0.0
+V0001|null|null|1|0.0|0.0
+V0002|MED001|Paracetamol 500mg|2|2.5|5.0
+V0002|MED002|VitaminaC|1|10.0|10.0
+V0003|MED003|H&S|1|15.0|15.0

@@ -52,25 +52,60 @@ public class VentaDatos {
 
     // Lee todas las ventas (solo cabeceras)
     public ArrayList<Venta> leerTodas() {
-        ArrayList<Venta> lista = new ArrayList<>();
-        File archivo = new File(ARCHIVO_VENTAS);
-        if (!archivo.exists()) return lista;
+    ArrayList<Venta> lista = new ArrayList<>();
+    File archivo = new File(ARCHIVO_VENTAS);
+    if (!archivo.exists()) return lista;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(ARCHIVO_VENTAS))) {
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                if (!linea.trim().isEmpty()) {
-                    String[] datos = linea.split("\\|");
+    try (BufferedReader br = new BufferedReader(new FileReader(ARCHIVO_VENTAS))) {
+        String linea;
+        while ((linea = br.readLine()) != null) {
+            if (!linea.trim().isEmpty()) {
+                String[] datos = linea.split("\\|");
+                if (datos.length >= 4) {
                     Venta v = new Venta(datos[0], datos[3]);
                     v.setFechaVenta(datos[1]);
+                    // Cargar detalles de esta venta
+                    ArrayList<DetalleVenta> detalles = leerDetallesPorVenta(datos[0]);
+                    for (DetalleVenta d : detalles) {
+                        v.agregarDetalle(d);
+                    }
                     lista.add(v);
                 }
             }
-        } catch (IOException e) {
-            System.out.println("Error al leer ventas: " + e.getMessage());
         }
-        return lista;
+    } catch (IOException e) {
+        System.out.println("Error al leer ventas: " + e.getMessage());
     }
+    return lista;
+}
+
+// Método nuevo — lee los detalles de una venta específica
+private ArrayList<DetalleVenta> leerDetallesPorVenta(String idVenta) {
+    ArrayList<DetalleVenta> lista = new ArrayList<>();
+    File archivo = new File(ARCHIVO_DETALLES);
+    if (!archivo.exists()) return lista;
+
+    try (BufferedReader br = new BufferedReader(new FileReader(ARCHIVO_DETALLES))) {
+        String linea;
+        while ((linea = br.readLine()) != null) {
+            if (!linea.trim().isEmpty()) {
+                String[] datos = linea.split("\\|");
+                // formato: IDVenta|codigo|nombre|cantidad|precioUnit|subtotal
+                if (datos.length >= 6 && datos[0].equals(idVenta)) {
+                    DetalleVenta d = new DetalleVenta(
+                        datos[1], datos[2],
+                        Integer.parseInt(datos[3]),
+                        Double.parseDouble(datos[4])
+                    );
+                    lista.add(d);
+                }
+            }
+        }
+    } catch (IOException e) {
+        System.out.println("Error al leer detalles: " + e.getMessage());
+    }
+    return lista;
+}
 
     // Genera ID único para nueva venta
     public String generarNuevoID() {

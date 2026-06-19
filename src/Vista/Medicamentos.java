@@ -146,7 +146,6 @@ public class Medicamentos extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         lblaviso = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtbusqueda = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblmedicamentos = new javax.swing.JTable();
         btnguardarmed = new javax.swing.JButton();
@@ -171,8 +170,10 @@ public class Medicamentos extends javax.swing.JInternalFrame {
         txtidproveedor = new javax.swing.JTextField();
         fechavencimiento = new com.toedter.calendar.JDateChooser();
         cmbcategoria = new javax.swing.JComboBox<>();
+        btnNuevaCat = new javax.swing.JButton();
         btnnuevomed = new javax.swing.JButton();
         btnLimpiarmed = new javax.swing.JButton();
+        txtbusquedmed = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -233,8 +234,6 @@ public class Medicamentos extends javax.swing.JInternalFrame {
 
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
         jLabel4.setText("🔍 Busqueda ");
-
-        txtbusqueda.addActionListener(this::txtbusquedaActionPerformed);
 
         tblmedicamentos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -300,6 +299,9 @@ public class Medicamentos extends javax.swing.JInternalFrame {
 
         cmbcategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        btnNuevaCat.setText("➕");
+        btnNuevaCat.addActionListener(this::btnNuevaCatActionPerformed);
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -325,8 +327,11 @@ public class Medicamentos extends javax.swing.JInternalFrame {
                     .addComponent(txtstockmed)
                     .addComponent(txtstockmin)
                     .addComponent(txtidproveedor)
-                    .addComponent(fechavencimiento, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-                    .addComponent(cmbcategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(fechavencimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(cmbcategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnNuevaCat)))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -364,7 +369,9 @@ public class Medicamentos extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11)
-                    .addComponent(cmbcategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cmbcategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnNuevaCat)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
@@ -378,6 +385,12 @@ public class Medicamentos extends javax.swing.JInternalFrame {
         btnLimpiarmed.setText("Limpiar");
         btnLimpiarmed.addActionListener(this::btnLimpiarmedActionPerformed);
 
+        txtbusquedmed.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtbusquedmedKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -388,11 +401,11 @@ public class Medicamentos extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(39, 39, 39)
-                        .addComponent(txtbusqueda))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(55, 55, 55)
+                                .addComponent(txtbusquedmed, javax.swing.GroupLayout.PREFERRED_SIZE, 653, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnguardarmed)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -419,7 +432,7 @@ public class Medicamentos extends javax.swing.JInternalFrame {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtbusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtbusquedmed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -431,7 +444,7 @@ public class Medicamentos extends javax.swing.JInternalFrame {
                     .addComponent(btneliminarmed, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnnuevomed)
                     .addComponent(btnLimpiarmed))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -540,7 +553,7 @@ public class Medicamentos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLimpiarmedActionPerformed
     
     // txtbusqueda — búsqueda en tiempo real:
-    public void txtbusquedaKeyReleased(java.awt.event.KeyEvent evt)
+    /*public void txtbusquedaKeyReleased(java.awt.event.KeyEvent evt)
     {
         String busqueda = txtbusqueda.getText().trim().toLowerCase();
         modelo.setRowCount(0);
@@ -552,14 +565,35 @@ public class Medicamentos extends javax.swing.JInternalFrame {
                 });
             }
         }
+    }*/
+    private void btnNuevaCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaCatActionPerformed
+    CategoriaDialog categ = new CategoriaDialog((java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this),true);
+    categ.setVisible(true);
+
+    // Si se guardó, recargar el JComboBox
+    if (categ.isGuardado())
+    {
+        cargarCategorias();
     }
-    private void txtbusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtbusquedaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtbusquedaActionPerformed
+    }//GEN-LAST:event_btnNuevaCatActionPerformed
+
+    private void txtbusquedmedKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtbusquedmedKeyReleased
+    
+    String busqueda = txtbusquedmed.getText().trim().toLowerCase();
+    modelo.setRowCount(0);
+    for (Modelo.Medicamento m : controlador.listarTodos()) 
+    {
+        if (m.getNombre().toLowerCase().contains(busqueda) || m.getCodigo().toLowerCase().contains(busqueda)) 
+        {
+            modelo.addRow(new Object[]{m.getCodigo(), m.getNombre(), m.getStock(), m.getFechaVencimiento()});
+        }
+    }        // TODO add your handling code here:
+    }//GEN-LAST:event_txtbusquedmedKeyReleased
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLimpiarmed;
+    private javax.swing.JButton btnNuevaCat;
     private javax.swing.JButton btneditarmed;
     private javax.swing.JButton btneliminarmed;
     private javax.swing.JButton btnguardarmed;
@@ -585,7 +619,7 @@ public class Medicamentos extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblaviso;
     private javax.swing.JTable tblmedicamentos;
-    private javax.swing.JTextField txtbusqueda;
+    private javax.swing.JTextField txtbusquedmed;
     private javax.swing.JTextField txtcodigomedicamento;
     private javax.swing.JTextField txtidproveedor;
     private javax.swing.JTextField txtlab;

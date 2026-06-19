@@ -37,4 +37,8 @@ public class Proveedor extends Persona{
     public void buscar() {}
     public void actualizar() {}
     
+    @Override
+    public String toString() {
+        return codigo + "|" + nombre + "|" + Telefono;
+    }
 }

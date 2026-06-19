@@ -15,7 +15,7 @@ public class Usuario extends Persona {
     private String rol;
     private String contrasena;
 
-    public Usuario(String rol, String contrasena, String codigo, String nombre) {
+    public Usuario(String codigo, String nombre, String contrasena, String rol) {
         super(codigo, nombre);
         this.rol = rol;
         this.contrasena = contrasena;

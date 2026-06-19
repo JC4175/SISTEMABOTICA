@@ -1,0 +1,6 @@
+CAT001|Analgésicos
+CAT002|Antibioticos
+CAT003|Antibioticos
+CAT004|Vitaminas
+CAT005|Antiacidos
+cat003|Aseo

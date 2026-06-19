@@ -22,10 +22,10 @@ public class Venta {
     //formato de fecha a usar 
     private static final DateTimeFormatter FORMATO = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public Venta(String IDVenta, String fechaVenta) {
+    public Venta(String IDVenta, String codigoUsuario) {
         this.IDVenta = IDVenta;
         this.fechaVenta = LocalDate.now().format(FORMATO);
-        this.total = total;
+        this.total = 0;
         this.codigoUsuario = codigoUsuario;
         this.detalles = new ArrayList<>();
     }

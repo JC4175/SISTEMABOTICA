@@ -4,6 +4,10 @@
  */
 package botica;
 
+import Datos.UsuarioDatos;
+import Modelo.Usuario;
+import Vista.login;
+
 /**
  *
  * @author zakkc
@@ -15,6 +19,27 @@ public class BOTICA {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        //Crear el usuario administrador por defecto
+        crearUsuarioDefecto();
+        // 2. Abrir la pantalla de Login una sola vez de forma correcta
+        java.awt.EventQueue.invokeLater(() -> { new Vista.login().setVisible(true);});
+        /*login loginn = new login();
+        loginn.setVisible(true);*/
     }
     
+    
+    private static void crearUsuarioDefecto()
+    {
+        // 4. Ahora usamos las clases directamente gracias a los imports
+        UsuarioDatos uda = new UsuarioDatos();
+        if (!uda.existeCodigo("admin")) {
+            Usuario admin = new Usuario(
+                "admin", "Administrador", "admin123", "Titular Gerente"
+            );
+            uda.agregar(admin);
+        }
+    }
+    
+    
 }
+
