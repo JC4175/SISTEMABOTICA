@@ -99,6 +99,7 @@ public class Escritorio extends javax.swing.JFrame {
         mbMenu.setForeground(new java.awt.Color(255, 255, 255));
         mbMenu.setOpaque(true);
 
+        mMedicamentos.setForeground(new java.awt.Color(255, 255, 255));
         mMedicamentos.setText("💊  Medicamentos");
         mMedicamentos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -107,6 +108,7 @@ public class Escritorio extends javax.swing.JFrame {
         });
         mbMenu.add(mMedicamentos);
 
+        mVentas.setForeground(new java.awt.Color(255, 255, 255));
         mVentas.setText("🛒 Ventas");
         mVentas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -115,6 +117,7 @@ public class Escritorio extends javax.swing.JFrame {
         });
         mbMenu.add(mVentas);
 
+        mReportes.setForeground(new java.awt.Color(255, 255, 255));
         mReportes.setText("📊 Reportes");
         mReportes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -123,6 +126,7 @@ public class Escritorio extends javax.swing.JFrame {
         });
         mbMenu.add(mReportes);
 
+        mProveedores.setForeground(new java.awt.Color(255, 255, 255));
         mProveedores.setText("🚚 Proveedores");
         mProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -131,6 +135,7 @@ public class Escritorio extends javax.swing.JFrame {
         });
         mbMenu.add(mProveedores);
 
+        mUsuarios.setForeground(new java.awt.Color(255, 255, 255));
         mUsuarios.setText("👥 Usuarios");
         mUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -162,6 +167,7 @@ public class Escritorio extends javax.swing.JFrame {
     
     //---------------------------------------------------------------------------
     private void mMedicamentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mMedicamentosMouseClicked
+        
         abrirVentana(new Medicamentos());       // TODO add your handling code here:
     }//GEN-LAST:event_mMedicamentosMouseClicked
 
@@ -190,7 +196,7 @@ public class Escritorio extends javax.swing.JFrame {
         abrirVentana(new Usuarioform());
     }//GEN-LAST:event_mUsuariosMouseClicked
 
-    //METODO PARA 
+    
     
     
     

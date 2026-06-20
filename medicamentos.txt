@@ -1,3 +1,5 @@
-MED001|Paracetamol 500mg|Bayer|2.5|98|10|30/07/2026|Analgésicos|PROV001
-MED002|VitaminaC|Bayer|10.0|9|5|23/06/2026|Vitaminas|prov002
+MED001|Paracetamol 500mg|Bayer|2.5|85|10|30/07/2026|Analgésicos|PROV001
+MED002|VitaminaC|Bayer|10.0|7|5|23/06/2026|Vitaminas|prov002
 MED003|H&S|SAmpoos|15.0|199|20|23/06/2026|Aseo|Prov002
+MED004|H&SS|SAmpoos|15.0|199|20|23/06/2026|Aseo|Prov001
+MED005|Jabon|Avon|5.0|10|5|30/07/2026|Aseo|Prov001

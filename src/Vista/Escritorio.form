@@ -15,6 +15,9 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="mMedicamentos">
           <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="\ud83d\udc8a  Medicamentos" containsInvalidXMLChars="true"/>
           </Properties>
           <Events>
@@ -23,6 +26,9 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="mVentas">
           <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="\ud83d\uded2 Ventas" containsInvalidXMLChars="true"/>
           </Properties>
           <Events>
@@ -31,6 +37,9 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="mReportes">
           <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="\ud83d\udcca Reportes" containsInvalidXMLChars="true"/>
           </Properties>
           <Events>
@@ -39,6 +48,9 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="mProveedores">
           <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="\ud83d\ude9a Proveedores" containsInvalidXMLChars="true"/>
           </Properties>
           <Events>
@@ -47,6 +59,9 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="mUsuarios">
           <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="\ud83d\udc65 Usuarios" containsInvalidXMLChars="true"/>
           </Properties>
           <Events>

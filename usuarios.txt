@@ -1,2 +1,3 @@
 admin|Administrador|admin123|Titular Gerente
 farm01|Fernanda Pérez|farm123|Técnico en Farmacia
+jm123|ROBERTO|ROBERTO2|Director Técnico

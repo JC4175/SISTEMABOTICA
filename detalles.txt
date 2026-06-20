@@ -3,3 +3,7 @@ V0001|null|null|1|0.0|0.0
 V0002|MED001|Paracetamol 500mg|2|2.5|5.0
 V0002|MED002|VitaminaC|1|10.0|10.0
 V0003|MED003|H&S|1|15.0|15.0
+V0004|MED001|Paracetamol 500mg|2|2.5|5.0
+V0005|MED001|Paracetamol 500mg|6|2.5|15.0
+V0006|MED001|Paracetamol 500mg|5|2.5|12.5
+V0006|MED002|VitaminaC|2|10.0|20.0

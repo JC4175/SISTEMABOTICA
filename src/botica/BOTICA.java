@@ -34,7 +34,7 @@ public class BOTICA {
         UsuarioDatos uda = new UsuarioDatos();
         if (!uda.existeCodigo("admin")) {
             Usuario admin = new Usuario(
-                "admin", "Administrador", "admin123", "Titular Gerente"
+                "admin", "Administrador Fabiana", "admin123", "Titular Gerente"
             );
             uda.agregar(admin);
         }

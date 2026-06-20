@@ -47,7 +47,7 @@ public class Usuario extends Persona {
         this.contrasena = contrasena;
     }
     
-        
+    //convertir el el objeto en texto plano, devuelva una representación legible de sus datos
     @Override
     public String toString() {
         return codigo + "|" + nombre + "|" + contrasena + "|" + rol;
