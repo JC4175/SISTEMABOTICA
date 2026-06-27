@@ -64,6 +64,7 @@ public class Escritorio extends javax.swing.JFrame {
         mReportes = new javax.swing.JMenu();
         mProveedores = new javax.swing.JMenu();
         mUsuarios = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -147,6 +148,14 @@ public class Escritorio extends javax.swing.JFrame {
         });
         mbMenu.add(mUsuarios);
 
+        jMenu2.setText("📊 Dashboard");
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
+            }
+        });
+        mbMenu.add(jMenu2);
+
         jMenu1.setForeground(new java.awt.Color(255, 255, 255));
         jMenu1.setText("🚪 Cerrar Sesión");
         jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -222,6 +231,10 @@ public class Escritorio extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenu1MouseClicked
 
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu2MouseClicked
+
     private void agregarMenuClientes() {
         javax.swing.JMenu mClientes = new javax.swing.JMenu("👥 Clientes");
         mClientes.setForeground(new java.awt.Color(255, 255, 255));
@@ -259,6 +272,7 @@ public class Escritorio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenu mMedicamentos;
     private javax.swing.JMenu mProveedores;
