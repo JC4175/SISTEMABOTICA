@@ -18,15 +18,20 @@ public class MedicamentoControlador {
     
     public String registrar(String codigo, String nombre, String laboratorio,
                             String precio, String stock, String stockMin,
-                            String fechaVenc, String idCat, String idProv) 
+                            String fechaVenc, String idCat, String idProv,
+                            boolean requiereReceta, String presentacion) 
     {
         if (codigo.isEmpty() || nombre.isEmpty() || laboratorio.isEmpty() ||
             precio.isEmpty() || stock.isEmpty() || stockMin.isEmpty() ||
-            fechaVenc.isEmpty() || idCat.isEmpty() || idProv.isEmpty())
+            fechaVenc.isEmpty() || idCat.isEmpty() || idProv.isEmpty() || presentacion.isEmpty())
             return "Todos los campos son obligatorios.";
 
         if (dao.existeCodigo(codigo))
             return "Ya existe un medicamento con ese código.";
+
+        if (!new Datos.ProveedorDatos().existeCodigo(idProv))
+            return "El código de proveedor '" + idProv + "' no existe.";
+
         try {
             double p = Double.parseDouble(precio);
             int s = Integer.parseInt(stock);
@@ -37,7 +42,7 @@ public class MedicamentoControlador {
             if (sm < 0) return "El stock mínimo no puede ser negativo.";
 
             Medicamento m = new Medicamento(codigo, nombre, laboratorio,
-                                            p, s, sm, fechaVenc, idCat, idProv);
+                                            p, s, sm, fechaVenc, idCat, idProv, requiereReceta, presentacion);
 
             if (m.estaVencido())
                 return "No se puede registrar un medicamento ya vencido.";
@@ -49,13 +54,23 @@ public class MedicamentoControlador {
             return "Precio, stock y stock mínimo deben ser números válidos.";
         }
     }
-    
+
+    public String registrar(String codigo, String nombre, String laboratorio,
+                            String precio, String stock, String stockMin,
+                            String fechaVenc, String idCat, String idProv) 
+    {
+        return registrar(codigo, nombre, laboratorio, precio, stock, stockMin, fechaVenc, idCat, idProv, false, "General");
+    }
     
     public String actualizar(String codigo, String nombre, String laboratorio,
                              String precio, String stock, String stockMin,
-                             String fechaVenc, String idCat, String idProv) {
+                             String fechaVenc, String idCat, String idProv,
+                             boolean requiereReceta, String presentacion) {
         if (!dao.existeCodigo(codigo))
             return "El medicamento no existe.";
+
+        if (!new Datos.ProveedorDatos().existeCodigo(idProv))
+            return "El código de proveedor '" + idProv + "' no existe.";
 
         try {
             double p = Double.parseDouble(precio);
@@ -63,12 +78,18 @@ public class MedicamentoControlador {
             int sm = Integer.parseInt(stockMin);
 
             dao.actualizar(new Medicamento(codigo, nombre, laboratorio,
-                                           p, s, sm, fechaVenc, idCat, idProv));
+                                           p, s, sm, fechaVenc, idCat, idProv, requiereReceta, presentacion));
             return "ok";
 
         } catch (NumberFormatException e) {
             return "Precio, stock y stock mínimo deben ser números válidos.";
         }
+    }
+
+    public String actualizar(String codigo, String nombre, String laboratorio,
+                             String precio, String stock, String stockMin,
+                             String fechaVenc, String idCat, String idProv) {
+        return actualizar(codigo, nombre, laboratorio, precio, stock, stockMin, fechaVenc, idCat, idProv, false, "General");
     }
 
     public String eliminar(String codigo) {

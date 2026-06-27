@@ -44,14 +44,27 @@ public class MedicamentoDatos {
             while ((linea = br.readLine()) != null) {
                 if (!linea.trim().isEmpty()) {
                     String[] datos = linea.split("\\|");
-                    Medicamento m = new Medicamento(
-                        datos[0], datos[1], datos[2],
-                        Double.parseDouble(datos[3]),
-                        Integer.parseInt(datos[4]),
-                        Integer.parseInt(datos[5]),
-                        datos[6], datos[7], datos[8]
-                    );
-                    lista.add(m);
+                    if (datos.length >= 11) {
+                        Medicamento m = new Medicamento(
+                            datos[0], datos[1], datos[2],
+                            Double.parseDouble(datos[3]),
+                            Integer.parseInt(datos[4]),
+                            Integer.parseInt(datos[5]),
+                            datos[6], datos[7], datos[8],
+                            Boolean.parseBoolean(datos[9]),
+                            datos[10]
+                        );
+                        lista.add(m);
+                    } else if (datos.length >= 9) {
+                        Medicamento m = new Medicamento(
+                            datos[0], datos[1], datos[2],
+                            Double.parseDouble(datos[3]),
+                            Integer.parseInt(datos[4]),
+                            Integer.parseInt(datos[5]),
+                            datos[6], datos[7], datos[8]
+                        );
+                        lista.add(m);
+                    }
                 }
             }
         } catch (IOException e) {

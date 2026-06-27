@@ -17,6 +17,10 @@ public class Venta {
     private String fechaVenta;
     private double total;
     private String codigoUsuario;
+    private String tipoComprobante;
+    private String numComprobante;
+    private String metodoPago;
+    private String codigoCliente;
     private ArrayList<DetalleVenta> detalles; //lista para guardar el registro de cada venta
     
     //formato de fecha a usar 
@@ -27,6 +31,34 @@ public class Venta {
         this.fechaVenta = LocalDate.now().format(FORMATO);
         this.total = 0;
         this.codigoUsuario = codigoUsuario;
+        this.tipoComprobante = "Boleta";
+        this.numComprobante = "";
+        this.metodoPago = "Efectivo";
+        this.codigoCliente = "";
+        this.detalles = new ArrayList<>();
+    }
+
+    public Venta(String IDVenta, String codigoUsuario, String tipoComprobante, String numComprobante, String metodoPago, String codigoCliente) {
+        this.IDVenta = IDVenta;
+        this.fechaVenta = LocalDate.now().format(FORMATO);
+        this.total = 0;
+        this.codigoUsuario = codigoUsuario;
+        this.tipoComprobante = tipoComprobante;
+        this.numComprobante = numComprobante;
+        this.metodoPago = metodoPago;
+        this.codigoCliente = codigoCliente;
+        this.detalles = new ArrayList<>();
+    }
+
+    public Venta(String IDVenta, String fechaVenta, double total, String codigoUsuario, String tipoComprobante, String numComprobante, String metodoPago, String codigoCliente) {
+        this.IDVenta = IDVenta;
+        this.fechaVenta = fechaVenta;
+        this.total = total;
+        this.codigoUsuario = codigoUsuario;
+        this.tipoComprobante = tipoComprobante;
+        this.numComprobante = numComprobante;
+        this.metodoPago = metodoPago;
+        this.codigoCliente = codigoCliente;
         this.detalles = new ArrayList<>();
     }
     
@@ -66,6 +98,38 @@ public class Venta {
         this.codigoUsuario = codigoUsuario;
     }
 
+    public String getTipoComprobante() {
+        return tipoComprobante;
+    }
+
+    public void setTipoComprobante(String tipoComprobante) {
+        this.tipoComprobante = tipoComprobante;
+    }
+
+    public String getNumComprobante() {
+        return numComprobante;
+    }
+
+    public void setNumComprobante(String numComprobante) {
+        this.numComprobante = numComprobante;
+    }
+
+    public String getMetodoPago() {
+        return metodoPago;
+    }
+
+    public void setMetodoPago(String metodoPago) {
+        this.metodoPago = metodoPago;
+    }
+
+    public String getCodigoCliente() {
+        return codigoCliente;
+    }
+
+    public void setCodigoCliente(String codigoCliente) {
+        this.codigoCliente = codigoCliente;
+    }
+
     public ArrayList<DetalleVenta> getDetalles() {
         return detalles;
     }
@@ -74,16 +138,11 @@ public class Venta {
         this.detalles = detalles;
     }
         
-    
-    
-    
-    
     // Agrega un detalle y recalcula el total
     public void agregarDetalle(DetalleVenta detalle) {
         detalles.add(detalle);
         calcularTotal();
     }
-    
     
     // Elimina un detalle y recalcula
     public void eliminarDetalle(int indice) {
@@ -106,6 +165,9 @@ public class Venta {
         sb.append("ID: ").append(IDVenta).append("\n");
         sb.append("Fecha: ").append(fechaVenta).append("\n");
         sb.append("Usuario: ").append(codigoUsuario).append("\n");
+        sb.append("Comprobante: ").append(tipoComprobante).append(" Nro: ").append(numComprobante).append("\n");
+        sb.append("Método Pago: ").append(metodoPago).append("\n");
+        sb.append("Cliente: ").append(codigoCliente).append("\n");
         for (DetalleVenta d : detalles) {
             sb.append(d.toString()).append("\n");
         }
@@ -113,11 +175,10 @@ public class Venta {
         return sb.toString();
     }
     
-    
-    
     @Override
     public String toString() {
         return IDVenta + "|" + fechaVenta + "|" + 
-               String.format("%.2f", total) + "|" + codigoUsuario;
+               String.format("%.2f", total) + "|" + codigoUsuario + "|" +
+               tipoComprobante + "|" + numComprobante + "|" + metodoPago + "|" + codigoCliente;
     }
 }

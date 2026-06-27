@@ -6,9 +6,11 @@ package Controlador;
 
 import Datos.MedicamentoDatos;
 import Datos.VentaDatos;
+import Datos.ClienteDatos;
 import Modelo.DetalleVenta;
 import Modelo.Medicamento;
 import Modelo.Venta;
+import Modelo.Cliente;
 import java.util.ArrayList;
 
 /**
@@ -25,6 +27,62 @@ public class VentaControlador {
         String id = ventaDAO.generarNuevoID();
         String usuario = SesionControlador.getUsuarioActivo().getCodigo();
         ventaActual = new Venta(id, usuario);
+        ventaActual.setNumComprobante(generarSiguienteCorrelativo());
+    }
+
+    // Genera el siguiente número correlativo secuencial para el comprobante
+    public String generarSiguienteCorrelativo() {
+        int count = ventaDAO.leerTodas().size() + 1;
+        return String.format("%06d", count);
+    }
+
+    // Asocia un cliente a la venta actual verificando su existencia
+    public String asociarCliente(String codigoCliente) {
+        if (ventaActual == null)
+            return "Primero inicie una nueva venta.";
+        
+        if (codigoCliente == null || codigoCliente.trim().isEmpty()) {
+            ventaActual.setCodigoCliente("");
+            return "ok";
+        }
+
+        if (!new Datos.ClienteDatos().existeCodigo(codigoCliente)) {
+            return "El cliente con código '" + codigoCliente + "' no existe.";
+        }
+
+        ventaActual.setCodigoCliente(codigoCliente);
+        return "ok";
+    }
+
+    // Configura los detalles de facturación de la venta
+    public void configurarComprobante(String tipo, String nro, String metodoPago) {
+        if (ventaActual != null) {
+            ventaActual.setTipoComprobante(tipo);
+            ventaActual.setNumComprobante(nro);
+            ventaActual.setMetodoPago(metodoPago);
+        }
+    }
+
+    // Registra un cliente nuevo ingresado al vuelo en la venta y lo asocia
+    public String registrarClienteNuevoEnVenta(String dni, String nombre, String apellidoPaterno, String apellidoMaterno, String correo, boolean tieneAlergia, String detalleAlergia, String seguroMedico) {
+        if (ventaActual == null)
+            return "No hay venta activa.";
+        
+        if (dni == null || dni.trim().isEmpty()) {
+            ventaActual.setCodigoCliente("");
+            return "ok";
+        }
+
+        ClienteDatos cliDAO = new ClienteDatos();
+        // Si no existe, lo agregamos a la base de datos
+        if (!cliDAO.existeCodigo(dni)) {
+            String apellidoCompleto = (apellidoPaterno.trim() + " " + apellidoMaterno.trim()).trim();
+            Cliente nuevoCli = new Cliente(dni, nombre, apellidoCompleto, dni, correo, tieneAlergia, detalleAlergia, seguroMedico);
+            cliDAO.agregar(nuevoCli);
+        }
+        
+        ventaActual.setCodigoCliente(dni);
+        return "ok";
     }
 
     // Busca medicamento y valida antes de agregar

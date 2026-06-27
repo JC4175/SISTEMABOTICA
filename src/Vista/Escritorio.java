@@ -21,6 +21,8 @@ public class Escritorio extends javax.swing.JFrame {
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
         configurarSegunRol();
         actualizarStatusBar();
+        agregarMenuClientes();
+        agregarMenuCompras();
     }
     
     private void configurarSegunRol() {
@@ -62,6 +64,7 @@ public class Escritorio extends javax.swing.JFrame {
         mReportes = new javax.swing.JMenu();
         mProveedores = new javax.swing.JMenu();
         mUsuarios = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1024, 768));
@@ -144,6 +147,15 @@ public class Escritorio extends javax.swing.JFrame {
         });
         mbMenu.add(mUsuarios);
 
+        jMenu1.setForeground(new java.awt.Color(255, 255, 255));
+        jMenu1.setText("🚪 Cerrar Sesión");
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu1MouseClicked(evt);
+            }
+        });
+        mbMenu.add(jMenu1);
+
         setJMenuBar(mbMenu);
 
         pack();
@@ -196,15 +208,57 @@ public class Escritorio extends javax.swing.JFrame {
         abrirVentana(new Usuarioform());
     }//GEN-LAST:event_mUsuariosMouseClicked
 
-    
-    
-    
-    
-    
+    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
+        // TODO add your handling code here:
+        
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
+            "¿Está seguro de que desea cerrar sesión?", "Cerrar Sesión", 
+            javax.swing.JOptionPane.YES_NO_OPTION);
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) 
+        {
+            Controlador.SesionControlador.cerrarSesion();
+            new Vista.login().setVisible(true); // Abre la pantalla de Login
+            this.dispose(); // Cierra el Escritorio actual
+        }
+    }//GEN-LAST:event_jMenu1MouseClicked
 
+    private void agregarMenuClientes() {
+        javax.swing.JMenu mClientes = new javax.swing.JMenu("👥 Clientes");
+        mClientes.setForeground(new java.awt.Color(255, 255, 255));
+        mClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                abrirVentana(new ClienteForm());
+            }
+        });
+        int index = mbMenu.getComponentIndex(jMenu1);
+        if (index >= 0) {
+            mbMenu.add(mClientes, index);
+        } else {
+            mbMenu.add(mClientes);
+        }
+        mbMenu.revalidate();
+    }
+
+    private void agregarMenuCompras() {
+        javax.swing.JMenu mCompras = new javax.swing.JMenu("🛒 Compras");
+        mCompras.setForeground(new java.awt.Color(255, 255, 255));
+        mCompras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                abrirVentana(new CompraForm());
+            }
+        });
+        int index = mbMenu.getComponentIndex(jMenu1);
+        if (index >= 0) {
+            mbMenu.add(mCompras, index);
+        } else {
+            mbMenu.add(mCompras);
+        }
+        mbMenu.revalidate();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenu mMedicamentos;
     private javax.swing.JMenu mProveedores;

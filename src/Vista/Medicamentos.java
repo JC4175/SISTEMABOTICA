@@ -32,12 +32,13 @@ public class Medicamentos extends javax.swing.JInternalFrame {
         verificarAlertas();
         // Deshabilitar campos hasta presionar Nuevo
         setFormularioHabilitado(false);        
+        restringirCaracteresVisuales();
     }
 
     private void configurarTabla() 
     {
         modelo = new DefaultTableModel(
-            new String[]{"Código", "Nombre", "Stock", "Vence"}, 0
+            new String[]{"Código", "Nombre", "Stock", "Vence", "Receta", "Presentación"}, 0
         ) {
             @Override
             public boolean isCellEditable(int r, int c) { return false; }
@@ -52,7 +53,12 @@ public class Medicamentos extends javax.swing.JInternalFrame {
         modelo.setRowCount(0);
         for (Medicamento m : controlador.listarTodos()) {
             modelo.addRow(new Object[]{
-                m.getCodigo(), m.getNombre(), m.getStock(), m.getFechaVencimiento()
+                m.getCodigo(), 
+                m.getNombre(), 
+                m.getStock(), 
+                m.getFechaVencimiento(),
+                m.isRequiereReceta() ? "Sí" : "No",
+                m.getPresentacion()
             });
         }
     }
@@ -94,6 +100,13 @@ public class Medicamentos extends javax.swing.JInternalFrame {
         txtstockmin.setText(String.valueOf(m.getStockMinimo()));
         txtidproveedor.setText(m.getIdProveedor());
         cmbcategoria.setSelectedItem(m.getIdCategoria());
+        
+        if (chkRequiereReceta != null) {
+            chkRequiereReceta.setSelected(m.isRequiereReceta());
+        }
+        if (txtPresentacion != null) {
+            txtPresentacion.setText(m.getPresentacion());
+        }
 
         try {
             java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
@@ -111,6 +124,12 @@ public class Medicamentos extends javax.swing.JInternalFrame {
         txtidproveedor.setEnabled(estado);
         fechavencimiento.setEnabled(estado);
         cmbcategoria.setEnabled(estado);
+        if (chkRequiereReceta != null) {
+            chkRequiereReceta.setEnabled(estado);
+        }
+        if (txtPresentacion != null) {
+            txtPresentacion.setEnabled(estado);
+        }
     }
 
     private void limpiarFormulario() {
@@ -123,6 +142,12 @@ public class Medicamentos extends javax.swing.JInternalFrame {
         txtidproveedor.setText("");
         fechavencimiento.setDate(null);
         if (cmbcategoria.getItemCount() > 0) cmbcategoria.setSelectedIndex(0);
+        if (chkRequiereReceta != null) {
+            chkRequiereReceta.setSelected(false);
+        }
+        if (txtPresentacion != null) {
+            txtPresentacion.setText("");
+        }
         tblmedicamentos.clearSelection();
         modoEdicion = false;
     }
@@ -171,6 +196,9 @@ public class Medicamentos extends javax.swing.JInternalFrame {
         fechavencimiento = new com.toedter.calendar.JDateChooser();
         cmbcategoria = new javax.swing.JComboBox<>();
         btnNuevaCat = new javax.swing.JButton();
+        chkRequiereReceta = new javax.swing.JCheckBox();
+        jLabel13 = new javax.swing.JLabel();
+        txtPresentacion = new javax.swing.JTextField();
         btnnuevomed = new javax.swing.JButton();
         btnLimpiarmed = new javax.swing.JButton();
         txtbusquedmed = new javax.swing.JTextField();
@@ -302,6 +330,10 @@ public class Medicamentos extends javax.swing.JInternalFrame {
         btnNuevaCat.setText("➕");
         btnNuevaCat.addActionListener(this::btnNuevaCatActionPerformed);
 
+        chkRequiereReceta.setText("Requiere Receta");
+
+        jLabel13.setText("Presentación");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -317,9 +349,11 @@ public class Medicamentos extends javax.swing.JInternalFrame {
                     .addComponent(jLabel9)
                     .addComponent(jLabel10)
                     .addComponent(jLabel11)
-                    .addComponent(jLabel12))
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel13))
                 .addGap(39, 39, 39)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(chkRequiereReceta)
                     .addComponent(txtcodigomedicamento)
                     .addComponent(txtnombremed)
                     .addComponent(txtlab)
@@ -331,7 +365,8 @@ public class Medicamentos extends javax.swing.JInternalFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(cmbcategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnNuevaCat)))
+                        .addComponent(btnNuevaCat))
+                    .addComponent(txtPresentacion))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -376,7 +411,13 @@ public class Medicamentos extends javax.swing.JInternalFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(txtidproveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(chkRequiereReceta)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(txtPresentacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnnuevomed.setText("Nuevo");
@@ -399,29 +440,32 @@ public class Medicamentos extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(55, 55, 55)
-                                .addComponent(txtbusquedmed, javax.swing.GroupLayout.PREFERRED_SIZE, 653, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnguardarmed)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btneditarmed)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btneliminarmed)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnnuevomed)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnLimpiarmed))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(55, 55, 55)
+                                        .addComponent(txtbusquedmed, javax.swing.GroupLayout.PREFERRED_SIZE, 653, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnguardarmed)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btneditarmed)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btneliminarmed)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnnuevomed)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnLimpiarmed)))
+                                .addGap(0, 106, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -434,17 +478,17 @@ public class Medicamentos extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4)
                     .addComponent(txtbusquedmed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(31, 31, 31)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnguardarmed, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btneditarmed, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btneliminarmed, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnnuevomed)
                     .addComponent(btnLimpiarmed))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addGap(61, 61, 61))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -471,6 +515,15 @@ public class Medicamentos extends javax.swing.JInternalFrame {
         String resultado;
         String fecha = getFechaFormateada();
 
+        boolean reqReceta = false;
+        String pres = "General";
+        if (chkRequiereReceta != null) {
+            reqReceta = chkRequiereReceta.isSelected();
+        }
+        if (txtPresentacion != null) {
+            pres = txtPresentacion.getText().trim();
+        }
+
         if (!modoEdicion) {
             resultado = controlador.registrar(
                 txtcodigomedicamento.getText().trim(),
@@ -481,7 +534,9 @@ public class Medicamentos extends javax.swing.JInternalFrame {
                 txtstockmin.getText().trim(),
                 fecha,
                 (String) cmbcategoria.getSelectedItem(),
-                txtidproveedor.getText().trim()
+                txtidproveedor.getText().trim(),
+                reqReceta,
+                pres
             );
         } else {
             resultado = controlador.actualizar(
@@ -493,7 +548,9 @@ public class Medicamentos extends javax.swing.JInternalFrame {
                 txtstockmin.getText().trim(),
                 fecha,
                 (String) cmbcategoria.getSelectedItem(),
-                txtidproveedor.getText().trim()
+                txtidproveedor.getText().trim(),
+                reqReceta,
+                pres
             );
         }
 
@@ -591,6 +648,37 @@ public class Medicamentos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtbusquedmedKeyReleased
     
 
+    private void restringirCaracteresVisuales() {
+        if (txtpreciomed != null) {
+            txtpreciomed.addKeyListener(new java.awt.event.KeyAdapter() {
+                @Override
+                public void keyTyped(java.awt.event.KeyEvent evt) {
+                    char c = evt.getKeyChar();
+                    String text = txtpreciomed.getText();
+                    if (!Character.isDigit(c) && c != '.') {
+                        evt.consume();
+                    }
+                    if (c == '.' && text.contains(".")) {
+                        evt.consume();
+                    }
+                }
+            });
+        }
+
+        java.awt.event.KeyAdapter soloDigitos = new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                char c = evt.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    evt.consume();
+                }
+            }
+        };
+
+        if (txtstockmed != null) txtstockmed.addKeyListener(soloDigitos);
+        if (txtstockmin != null) txtstockmin.addKeyListener(soloDigitos);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLimpiarmed;
     private javax.swing.JButton btnNuevaCat;
@@ -598,12 +686,14 @@ public class Medicamentos extends javax.swing.JInternalFrame {
     private javax.swing.JButton btneliminarmed;
     private javax.swing.JButton btnguardarmed;
     private javax.swing.JButton btnnuevomed;
+    private javax.swing.JCheckBox chkRequiereReceta;
     private javax.swing.JComboBox<String> cmbcategoria;
     private com.toedter.calendar.JDateChooser fechavencimiento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -619,6 +709,7 @@ public class Medicamentos extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblaviso;
     private javax.swing.JTable tblmedicamentos;
+    private javax.swing.JTextField txtPresentacion;
     private javax.swing.JTextField txtbusquedmed;
     private javax.swing.JTextField txtcodigomedicamento;
     private javax.swing.JTextField txtidproveedor;

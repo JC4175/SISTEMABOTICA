@@ -22,20 +22,47 @@ public class Medicamento {
     private String fechaVencimiento; // d/m/a
     private String idCategoria;
     private String idProveedor;
+    private boolean requiereReceta;
+    private String presentacion;
     
     //establecemos el formato de fecha que vamos a usar en el proyecto
     private static final DateTimeFormatter FORMATO =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    //Constructor
-    public Medicamento(String codigo, String nombre, String laboratorio, double precio, int stock, int stockMinimo, String fechaVencimiento, String idCategoria, String idProveedor) {
-        this.codigo = codigo;
-        this.nombre = nombre;
+    
+    //Constructor completo
+    public Medicamento(String codigo, String nombre, String laboratorio, double precio, int stock, int stockMinimo, String fechaVencimiento, String idCategoria, String idProveedor, boolean requiereReceta, String presentacion) {
+        setCodigo(codigo);
+        setNombre(nombre);
         this.laboratorio = laboratorio;
-        this.precio = precio;
-        this.stock = stock;
-        this.stockMinimo = stockMinimo;
+        setPrecio(precio);
+        setStock(stock);
+        setStockMinimo(stockMinimo);
         this.fechaVencimiento = fechaVencimiento;
         this.idCategoria = idCategoria;
-        this.idProveedor = idProveedor;
+        setIdProveedor(idProveedor);
+        this.requiereReceta = requiereReceta;
+        this.presentacion = presentacion;
+    }
+
+    //Constructor de compatibilidad
+    public Medicamento(String codigo, String nombre, String laboratorio, double precio, int stock, int stockMinimo, String fechaVencimiento, String idCategoria, String idProveedor) {
+        setCodigo(codigo);
+        setNombre(nombre);
+        this.laboratorio = laboratorio;
+        setPrecio(precio);
+        setStock(stock);
+        setStockMinimo(stockMinimo);
+        this.fechaVencimiento = fechaVencimiento;
+        this.idCategoria = idCategoria;
+        setIdProveedor(idProveedor);
+        this.requiereReceta = false;
+        this.presentacion = "General";
+    }
+
+    public Medicamento() {
+    }
+
+    public static Medicamento buscarPorID(String codigo) {
+        return new Datos.MedicamentoDatos().buscarPorCodigo(codigo);
     }
 
     public String getCodigo() {
@@ -43,6 +70,9 @@ public class Medicamento {
     }
 
     public void setCodigo(String codigo) {
+        if (codigo == null || codigo.trim().isEmpty()) {
+            throw new IllegalArgumentException("El código del medicamento no puede estar vacío.");
+        }
         this.codigo = codigo;
     }
 
@@ -51,6 +81,9 @@ public class Medicamento {
     }
 
     public void setNombre(String nombre) {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre del medicamento no puede estar vacío.");
+        }
         this.nombre = nombre;
     }
 
@@ -67,6 +100,9 @@ public class Medicamento {
     }
 
     public void setPrecio(double precio) {
+        if (precio <= 0) {
+            throw new IllegalArgumentException("El precio debe ser mayor a 0.");
+        }
         this.precio = precio;
     }
 
@@ -75,6 +111,9 @@ public class Medicamento {
     }
 
     public void setStock(int stock) {
+        if (stock < 0) {
+            throw new IllegalArgumentException("El stock no puede ser negativo.");
+        }
         this.stock = stock;
     }
 
@@ -83,6 +122,9 @@ public class Medicamento {
     }
 
     public void setStockMinimo(int stockMinimo) {
+        if (stockMinimo < 0) {
+            throw new IllegalArgumentException("El stock mínimo no puede ser negativo.");
+        }
         this.stockMinimo = stockMinimo;
     }
 
@@ -107,14 +149,33 @@ public class Medicamento {
     }
 
     public void setIdProveedor(String idProveedor) {
+        if (idProveedor == null || idProveedor.trim().isEmpty()) {
+            throw new IllegalArgumentException("El código de proveedor no puede estar vacío.");
+        }
         this.idProveedor = idProveedor;
+    }
+
+    public boolean isRequiereReceta() {
+        return requiereReceta;
+    }
+
+    public void setRequiereReceta(boolean requiereReceta) {
+        this.requiereReceta = requiereReceta;
+    }
+
+    public String getPresentacion() {
+        return presentacion;
+    }
+
+    public void setPresentacion(String presentacion) {
+        this.presentacion = presentacion;
     }
         
     @Override
     public String toString() {
         return codigo + "|" + nombre + "|" + laboratorio + "|" + precio + "|" +
                stock + "|" + stockMinimo + "|" + fechaVencimiento + "|" +
-               idCategoria + "|" + idProveedor;
+               idCategoria + "|" + idProveedor + "|" + requiereReceta + "|" + presentacion;
     }
     
     // -----------------------------METODOS PARA HCER VERIFICACIONES DE LOS MEDICAMENTOS---------------------

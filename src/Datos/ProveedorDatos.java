@@ -41,7 +41,11 @@ public class ProveedorDatos {
             while ((linea = br.readLine()) != null) {
                 if (!linea.trim().isEmpty()) {
                     String[] datos = linea.split("\\|");
-                    lista.add(new Proveedor(datos[0], datos[1], datos[2]));
+                    if (datos.length >= 6) {
+                        lista.add(new Proveedor(datos[0], datos[1], datos[2], datos[3], datos[4], datos[5]));
+                    } else if (datos.length >= 3) {
+                        lista.add(new Proveedor(datos[0], datos[1], datos[2]));
+                    }
                 }
             }
         } catch (IOException e) {

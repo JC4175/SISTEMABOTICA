@@ -42,7 +42,21 @@ public class UsuarioDatos {
             while ((linea = br.readLine()) != null) {
                 if (!linea.trim().isEmpty()) {
                     String[] datos = linea.split("\\|");
-                    lista.add(new Usuario(datos[0], datos[1], datos[2], datos[3]));
+                    if (datos.length >= 9) {
+                        lista.add(new Usuario(
+                            datos[0], // codigo
+                            datos[1], // nombre
+                            datos[2], // apellido
+                            datos[3], // dni
+                            datos[4], // correo
+                            datos[5], // nombreUsuario
+                            datos[6], // contrasena
+                            datos[7], // rol
+                            Boolean.parseBoolean(datos[8]) // estado
+                        ));
+                    } else if (datos.length >= 4) {
+                        lista.add(new Usuario(datos[0], datos[1], datos[2], datos[3]));
+                    }
                 }
             }
         } catch (IOException e) {

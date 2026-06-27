@@ -27,11 +27,12 @@ public class proveedorForm extends javax.swing.JInternalFrame {
         configurarTabla();
         cargarTabla();
         setFormularioHabilitado(false);
+        restringirCaracteresVisuales();
     }
 
     private void configurarTabla()
     {
-        modelo = new DefaultTableModel( new String[]{"ID", "Razón Social", "Teléfono"}, 0) 
+        modelo = new DefaultTableModel( new String[]{"Código/ID", "Razón Social", "Teléfono", "Empresa", "RUC"}, 0) 
         {public boolean isCellEditable(int r, int c) { return false; }};
         
         tblProveeedor.setModel(modelo);
@@ -43,7 +44,7 @@ public class proveedorForm extends javax.swing.JInternalFrame {
         modelo.setRowCount(0);
         for (Proveedor p : controlador.listarTodos()) 
         {
-            modelo.addRow(new Object[]{p.getCodigo(), p.getNombre(), p.getTelefono()});
+            modelo.addRow(new Object[]{p.getCodigo(), p.getRazonSocial(), p.getTelefono(), p.getEmpresa(), p.getRuc()});
         }
     }
     
@@ -51,9 +52,16 @@ public class proveedorForm extends javax.swing.JInternalFrame {
     {
         int fila = tblProveeedor.getSelectedRow();
         if (fila < 0) return;
-        txtIdprov.setText((String) modelo.getValueAt(fila, 0));
-        txtNombreProv.setText((String) modelo.getValueAt(fila, 1));
-        txtTelefonoProv.setText((String) modelo.getValueAt(fila, 2));
+        String codigo = (String) modelo.getValueAt(fila, 0);
+        Proveedor p = controlador.buscarPorCodigo(codigo);
+        if (p == null) return;
+
+        txtIdprov.setText(p.getCodigo());
+        txtNombreProv.setText(p.getRazonSocial());
+        txtTelefonoProv.setText(p.getTelefono());
+        if (txtEmpresa != null) txtEmpresa.setText(p.getEmpresa());
+        if (txtDireccionEmpresa != null) txtDireccionEmpresa.setText(p.getDireccionEmpresa());
+        if (txtRuc != null) txtRuc.setText(p.getRuc());
     }
 
     private void limpiarFormulario() 
@@ -61,6 +69,9 @@ public class proveedorForm extends javax.swing.JInternalFrame {
         txtIdprov.setText("");
         txtNombreProv.setText("");
         txtTelefonoProv.setText("");
+        if (txtEmpresa != null) txtEmpresa.setText("");
+        if (txtDireccionEmpresa != null) txtDireccionEmpresa.setText("");
+        if (txtRuc != null) txtRuc.setText("");
         txtbuscarproveedor.setText("");
         tblProveeedor.clearSelection();
         modoEdicion = false;
@@ -68,9 +79,12 @@ public class proveedorForm extends javax.swing.JInternalFrame {
     
     private void setFormularioHabilitado(boolean estado)
     {
-        txtIdprov.setEnabled(estado);
+        txtIdprov.setEnabled(estado && !modoEdicion);
         txtNombreProv.setEnabled(estado);
         txtTelefonoProv.setEnabled(estado);
+        if (txtEmpresa != null) txtEmpresa.setEnabled(estado);
+        if (txtDireccionEmpresa != null) txtDireccionEmpresa.setEnabled(estado);
+        if (txtRuc != null) txtRuc.setEnabled(estado);
     }
     
     
@@ -102,6 +116,12 @@ public class proveedorForm extends javax.swing.JInternalFrame {
         btneditarprov = new javax.swing.JButton();
         btnEliminarProv = new javax.swing.JButton();
         btnLimpiarProv = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtEmpresa = new javax.swing.JTextField();
+        txtDireccionEmpresa = new javax.swing.JTextField();
+        txtRuc = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
 
         setClosable(true);
         setMaximizable(true);
@@ -179,30 +199,45 @@ public class proveedorForm extends javax.swing.JInternalFrame {
         btnLimpiarProv.setText("Limpiar");
         btnLimpiarProv.addActionListener(this::btnLimpiarProvActionPerformed);
 
+        jLabel7.setText("Empresa");
+
+        jLabel8.setText("Direccion");
+
+        jLabel10.setText("RUC");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnguardarprov, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btneditarprov, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEliminarProv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLimpiarProv, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22))
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(20, 20, 20)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(39, 39, 39)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtRuc, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel5))
+                        .addGap(35, 35, 35)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtIdprov, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
                             .addComponent(txtNombreProv)
-                            .addComponent(txtTelefonoProv)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnguardarprov, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btneditarprov, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnEliminarProv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnLimpiarProv, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtTelefonoProv)
+                            .addComponent(txtEmpresa)
+                            .addComponent(txtDireccionEmpresa))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -220,7 +255,19 @@ public class proveedorForm extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtTelefonoProv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtDireccionEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(txtRuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnguardarprov)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btneditarprov)
@@ -228,7 +275,7 @@ public class proveedorForm extends javax.swing.JInternalFrame {
                 .addComponent(btnEliminarProv)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLimpiarProv)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(31, 31, 31))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -266,9 +313,9 @@ public class proveedorForm extends javax.swing.JInternalFrame {
                     .addComponent(btnNuevoProv))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 25, Short.MAX_VALUE))
+                .addGap(0, 8, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -289,16 +336,21 @@ public class proveedorForm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNuevoProvActionPerformed
 
     private void btnguardarprovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarprovActionPerformed
+        String codigo = txtIdprov.getText().trim();
+        String razonSocial = txtNombreProv.getText().trim();
+        String telefono = txtTelefonoProv.getText().trim();
+        String empresa = (txtEmpresa != null) ? txtEmpresa.getText().trim() : razonSocial;
+        String direccion = (txtDireccionEmpresa != null) ? txtDireccionEmpresa.getText().trim() : "";
+        String ruc = (txtRuc != null) ? txtRuc.getText().trim() : codigo;
+
         String resultado;
         if (!modoEdicion) 
         {
-            resultado = controlador.registrar( txtIdprov.getText().trim(), txtNombreProv.getText().trim(),
-                    txtTelefonoProv.getText().trim());
+            resultado = controlador.registrar(codigo, razonSocial, telefono, empresa, direccion, ruc);
         } 
         else 
         {
-            resultado = controlador.actualizar(txtIdprov.getText().trim(), txtNombreProv.getText().trim(),
-                txtTelefonoProv.getText().trim());
+            resultado = controlador.actualizar(codigo, razonSocial, telefono, empresa, direccion, ruc);
         }
 
         if (resultado.equals("ok")) 
@@ -363,6 +415,34 @@ public class proveedorForm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnbuscarprovActionPerformed
 
 
+    private void restringirCaracteresVisuales() {
+        if (txtRuc != null) {
+            txtRuc.addKeyListener(new java.awt.event.KeyAdapter() {
+                @Override
+                public void keyTyped(java.awt.event.KeyEvent evt) {
+                    char c = evt.getKeyChar();
+                    String text = txtRuc.getText();
+                    if (!Character.isDigit(c) || text.length() >= 11) {
+                        evt.consume();
+                    }
+                }
+            });
+        }
+
+        if (txtTelefonoProv != null) {
+            txtTelefonoProv.addKeyListener(new java.awt.event.KeyAdapter() {
+                @Override
+                public void keyTyped(java.awt.event.KeyEvent evt) {
+                    char c = evt.getKeyChar();
+                    String text = txtTelefonoProv.getText();
+                    if (!Character.isDigit(c) || text.length() >= 15) {
+                        evt.consume();
+                    }
+                }
+            });
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminarProv;
     private javax.swing.JButton btnLimpiarProv;
@@ -371,18 +451,24 @@ public class proveedorForm extends javax.swing.JInternalFrame {
     private javax.swing.JButton btneditarprov;
     private javax.swing.JButton btnguardarprov;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblProveeedor;
+    private javax.swing.JTextField txtDireccionEmpresa;
+    private javax.swing.JTextField txtEmpresa;
     private javax.swing.JTextField txtIdprov;
     private javax.swing.JTextField txtNombreProv;
+    private javax.swing.JTextField txtRuc;
     private javax.swing.JTextField txtTelefonoProv;
     private javax.swing.JTextField txtbuscarproveedor;
     // End of variables declaration//GEN-END:variables

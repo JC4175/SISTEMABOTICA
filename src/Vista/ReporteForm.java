@@ -34,6 +34,7 @@ public class ReporteForm extends javax.swing.JInternalFrame {
         
         configurarTabla();
         cargarResumenGeneral();
+        btnVerVencidos.addActionListener(e -> btnVerVencidosActionPerformed());
     }
 
     private void configurarTabla() 
@@ -80,6 +81,10 @@ public class ReporteForm extends javax.swing.JInternalFrame {
         lblvendido = new javax.swing.JLabel();
         lblvencidos = new javax.swing.JLabel();
         lblventas = new javax.swing.JLabel();
+        lblTopMedicamento = new javax.swing.JLabel();
+        lblTicketPromedio = new javax.swing.JLabel();
+        lblTopPago = new javax.swing.JLabel();
+        btnVerVencidos = new javax.swing.JButton();
         btngenerar = new javax.swing.JButton();
         btnexportar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -141,6 +146,8 @@ public class ReporteForm extends javax.swing.JInternalFrame {
 
         lbltotal.setBackground(new java.awt.Color(255, 255, 255));
 
+        btnVerVencidos.setText("Ver Detalles");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -158,28 +165,46 @@ public class ReporteForm extends javax.swing.JInternalFrame {
                     .addComponent(lblvendido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblvencidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblventas, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
-                .addContainerGap(563, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnVerVencidos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblTopMedicamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTicketPromedio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTopPago, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(61, 61, 61))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbltotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblvendido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblvencidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblventas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbltotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblTopMedicamento, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblvendido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(17, 17, 17)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnVerVencidos, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblvencidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblventas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(17, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblTicketPromedio, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblTopPago, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27))))
         );
 
         btngenerar.setBackground(new java.awt.Color(25, 135, 84));
@@ -240,7 +265,7 @@ public class ReporteForm extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(41, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -256,7 +281,7 @@ public class ReporteForm extends javax.swing.JInternalFrame {
                         .addComponent(btnexportar))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -334,6 +359,55 @@ public class ReporteForm extends javax.swing.JInternalFrame {
         lblventas.setText(String.valueOf(ventasFiltradas.size()));
         lblvencidos.setText(String.valueOf(medControlador.contarProximosVencer()));
 
+        // --- Calcular Métricas Adicionales ---
+        // 1. Ticket Promedio
+        double ticketPromedio = 0;
+        if (!ventasFiltradas.isEmpty()) {
+            ticketPromedio = totalPeriodo / ventasFiltradas.size();
+        }
+        if (lblTicketPromedio != null) {
+            lblTicketPromedio.setText(String.format("Promedio: S/ %.2f", ticketPromedio));
+        }
+
+        // 2. Medicamento Estrella
+        java.util.HashMap<String, Integer> conteoMed = new java.util.HashMap<>();
+        for (Venta v : ventasFiltradas) {
+            for (DetalleVenta d : v.getDetalles()) {
+                conteoMed.put(d.getNombreMedicamento(), conteoMed.getOrDefault(d.getNombreMedicamento(), 0) + d.getCantidad());
+            }
+        }
+        String topMed = "-";
+        int maxCant = 0;
+        for (java.util.Map.Entry<String, Integer> entry : conteoMed.entrySet()) {
+            if (entry.getValue() > maxCant) {
+                maxCant = entry.getValue();
+                topMed = entry.getKey() + " (" + maxCant + " uds)";
+            }
+        }
+        if (lblTopMedicamento != null) {
+            lblTopMedicamento.setText("Estrella: " + topMed);
+        }
+
+        // 3. Método de Pago más Popular
+        java.util.HashMap<String, Integer> conteoPago = new java.util.HashMap<>();
+        for (Venta v : ventasFiltradas) {
+            String mp = v.getMetodoPago();
+            if (mp != null && !mp.isEmpty()) {
+                conteoPago.put(mp, conteoPago.getOrDefault(mp, 0) + 1);
+            }
+        }
+        String topPago = "-";
+        int maxPago = 0;
+        for (java.util.Map.Entry<String, Integer> entry : conteoPago.entrySet()) {
+            if (entry.getValue() > maxPago) {
+                maxPago = entry.getValue();
+                topPago = entry.getKey() + " (" + maxPago + " vtas)";
+            }
+        }
+        if (lblTopPago != null) {
+            lblTopPago.setText("Pago: " + topPago);
+        }
+
     }//GEN-LAST:event_btngenerarActionPerformed
 
     private void btnexportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnexportarActionPerformed
@@ -353,10 +427,28 @@ public class ReporteForm extends javax.swing.JInternalFrame {
             ventaControlador.exportarReporte(ventasFiltradas, ruta);
             javax.swing.JOptionPane.showMessageDialog(this,"✅ Reporte exportado en:\n" + ruta);
         }
-    }//GEN-LAST:event_btnexportarActionPerformed
+    }
 
+    private void btnVerVencidosActionPerformed() {
+        ArrayList<Modelo.Medicamento> lista = medControlador.listarProximosVencer();
+        if (lista == null || lista.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "✅ No hay medicamentos próximos a vencer (30 días).", "Medicamentos por Vencer", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("⚠️ MEDICAMENTOS PRÓXIMOS A VENCER (30 días):\n\n");
+        for (Modelo.Medicamento m : lista) {
+            sb.append("• ").append(m.getNombre())
+              .append(" (Código: ").append(m.getCodigo()).append(")")
+              .append(" - Vence: ").append(m.getFechaVencimiento())
+              .append(" - Stock: ").append(m.getStock()).append(" uds\n");
+        }
+        javax.swing.JOptionPane.showMessageDialog(this, sb.toString(), "Alerta de Vencimiento", javax.swing.JOptionPane.WARNING_MESSAGE);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnVerVencidos;
     private javax.swing.JButton btnexportar;
     private javax.swing.JButton btngenerar;
     private com.toedter.calendar.JDateChooser dateDesde;
@@ -373,6 +465,9 @@ public class ReporteForm extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblTicketPromedio;
+    private javax.swing.JLabel lblTopMedicamento;
+    private javax.swing.JLabel lblTopPago;
     private javax.swing.JLabel lbltotal;
     private javax.swing.JLabel lblvencidos;
     private javax.swing.JLabel lblvendido;
