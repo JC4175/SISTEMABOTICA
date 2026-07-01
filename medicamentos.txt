@@ -1,4 +1,4 @@
-MED001|Paracetamol|Form|5.0|38|10|31/08/2026|Analgésicos|asd|false|General
+MED001|Paracetamol|Form|5.0|40|10|31/08/2026|Analgésicos|asd|false|General
 MED002|Jabon Avon|Dermas|6.0|30|5|30/06/2026|Analgésicos|PROV001|false|General
 MED003|Inyectable|SantaAna|20.0|50|15|23/09/2026|Analgésicos|PROV001|true|PAQUETE
 MED004|Shampoo H&S|Laboratorio|25.0|98|20|31/12/2026|Aseo|PROV001|false|Envase

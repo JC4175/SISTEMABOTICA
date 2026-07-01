@@ -4,6 +4,26 @@
  */
 package Vista;
 
+import Controlador.ClienteControlador;
+import Controlador.MedicamentoControlador;
+import Controlador.VentaControlador;
+import Modelo.Cliente;
+import Modelo.Medicamento;
+import Modelo.Venta;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.data.category.DefaultCategoryDataset;
+
 /**
  *
  * @author zakkc
@@ -15,6 +35,8 @@ public class DashboardForm extends javax.swing.JInternalFrame {
      */
     public DashboardForm() {
         initComponents();
+        setClosable(true); // Permite cerrar el JInternalFrame
+        inicializarDashboard(); // Inicializa los datos y el gráfico del Dashboard
     }
 
     /**
@@ -35,6 +57,12 @@ public class DashboardForm extends javax.swing.JInternalFrame {
         lblStockBajoAlertas = new javax.swing.JLabel();
         panelGrafico = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        lblProductosVencer = new javax.swing.JLabel();
+
+        setClosable(true);
+        setMaximizable(true);
+        setResizable(true);
 
         jPanel1.setBackground(new java.awt.Color(202, 126, 16));
 
@@ -73,7 +101,7 @@ public class DashboardForm extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblClientesRegistrados, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                .addComponent(lblClientesRegistrados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -92,7 +120,7 @@ public class DashboardForm extends javax.swing.JInternalFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblStockBajoAlertas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblStockBajoAlertas, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -102,11 +130,11 @@ public class DashboardForm extends javax.swing.JInternalFrame {
         panelGrafico.setLayout(panelGraficoLayout);
         panelGraficoLayout.setHorizontalGroup(
             panelGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 670, Short.MAX_VALUE)
+            .addGap(0, 821, Short.MAX_VALUE)
         );
         panelGraficoLayout.setVerticalGroup(
             panelGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 317, Short.MAX_VALUE)
+            .addGap(0, 468, Short.MAX_VALUE)
         );
 
         jPanel5.setBackground(new java.awt.Color(246, 178, 107));
@@ -122,42 +150,188 @@ public class DashboardForm extends javax.swing.JInternalFrame {
             .addGap(0, 54, Short.MAX_VALUE)
         );
 
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblProductosVencer, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblProductosVencer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(53, 53, 53)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(40, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(panelGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
+                .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(38, 38, 38)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(panelGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(170, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    // Método para inicializar los datos y cargar las métricas y gráficos
+    private void inicializarDashboard() {
+        // --- RECONFIGURACIÓN DE DISEÑO RESPONSIVO (PROGRAMÁTICO) ---
+        // Creamos una fila uniforme de 4 columnas para que las tarjetas se distribuyan equitativamente
+        javax.swing.JPanel panelCards = new javax.swing.JPanel(new java.awt.GridLayout(1, 4, 15, 0));
+        panelCards.setBackground(jPanel1.getBackground());
+        panelCards.add(jPanel2);
+        panelCards.add(jPanel3);
+        panelCards.add(jPanel4);
+        panelCards.add(jPanel6);
+
+        // Creamos un contenedor central con BorderLayout para organizar los KPIs arriba y el gráfico abajo
+        javax.swing.JPanel panelCentro = new javax.swing.JPanel(new java.awt.BorderLayout(0, 20));
+        panelCentro.setBackground(jPanel1.getBackground());
+        panelCentro.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Margen alrededor del panel
+
+        panelCentro.add(panelCards, java.awt.BorderLayout.NORTH);
+        panelCentro.add(panelGrafico, java.awt.BorderLayout.CENTER);
+
+        // Reconfiguramos el contenedor principal (jPanel1) con BorderLayout para un ajuste dinámico responsivo
+        jPanel1.removeAll();
+        jPanel1.setLayout(new java.awt.BorderLayout());
+        jPanel1.add(jPanel5, java.awt.BorderLayout.NORTH);
+        jPanel1.add(panelCentro, java.awt.BorderLayout.CENTER);
+
+        // 1. Instanciar controladores para acceder a los datos reales
+        VentaControlador ctrlVenta = new VentaControlador();
+        ClienteControlador ctrlCliente = new ClienteControlador();
+        MedicamentoControlador ctrlMedicamento = new MedicamentoControlador();
+
+        // 2. Calcular Ventas del Día (recorremos todas y comparamos con la fecha de hoy)
+        double totalHoy = 0.0;
+        String fechaHoy = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        for (Venta v : ctrlVenta.listarTodas()) {
+            if (v.getFechaVenta().equals(fechaHoy)) {
+                totalHoy += v.getTotal();
+            }
+        }
+        // Configurar el texto de la tarjeta con formato HTML para diseño premium
+        lblVentasDia.setText("<html><center><font size='4' color='#555555'><b>Ventas de Hoy</b></font><br><br><font size='6' color='#2e7d32'><b>S/ " + String.format("%.2f", totalHoy) + "</b></font></center></html>");
+        lblVentasDia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        // 3. Contar Clientes Registrados
+        int cantClientes = ctrlCliente.listarTodos().size();
+        lblClientesRegistrados.setText("<html><center><font size='4' color='#555555'><b>Clientes Registrados</b></font><br><br><font size='6' color='#1565c0'><b>" + cantClientes + "</b></font></center></html>");
+        lblClientesRegistrados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        // 4. Contar Medicamentos con Stock Bajo (llegaron al stock mínimo)
+        int alertasStock = 0;
+        for (Medicamento m : ctrlMedicamento.listarTodos()) {
+            if (m.stockBajo()) {
+                alertasStock++;
+            }
+        }
+        lblStockBajoAlertas.setText("<html><center><font size='4' color='#555555'><b>Alertas de Stock Bajo</b></font><br><br><font size='6' color='#c62828'><b>" + alertasStock + "</b></font></center></html>");
+        lblStockBajoAlertas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        // 4.5 Contar Medicamentos Próximos a Vencer (en un plazo de 30 días)
+        int proximosVencer = ctrlMedicamento.contarProximosVencer();
+        lblProductosVencer.setText("<html><center><font size='4' color='#555555'><b>Próximos a Vencer</b></font><br><br><font size='6' color='#d84315'><b>" + proximosVencer + "</b></font></center></html>");
+        lblProductosVencer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        // 5. Generar Gráfico de Barras de Ventas de los Últimos 7 Días
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM");
+        SimpleDateFormat sdfCompleto = new SimpleDateFormat("dd/MM/yyyy");
+
+        // Creamos un mapa con las ventas por fecha para optimizar búsquedas
+        HashMap<String, Double> ventasPorFecha = new HashMap<>();
+        for (Venta v : ctrlVenta.listarTodas()) {
+            ventasPorFecha.put(v.getFechaVenta(), ventasPorFecha.getOrDefault(v.getFechaVenta(), 0.0) + v.getTotal());
+        }
+
+        // Retrocedemos 7 días en el calendario para llenar las barras secuencialmente
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_YEAR, -6); // Hace 6 días
+        
+        for (int i = 0; i < 7; i++) {
+            Date d = cal.getTime();
+            String claveFecha = sdfCompleto.format(d);
+            String etiquetaFecha = sdf.format(d);
+            double totalDia = ventasPorFecha.getOrDefault(claveFecha, 0.0);
+            
+            // Agregar valor al dataset de JFreeChart
+            dataset.addValue(totalDia, "Ventas", etiquetaFecha);
+            cal.add(Calendar.DAY_OF_YEAR, 1); // Avanzar 1 día
+        }
+
+        // Crear el gráfico de barras interactivo
+        JFreeChart chart = ChartFactory.createBarChart(
+            "Ventas de los Últimos 7 Días",    // Título
+            "Día / Fecha",                      // Eje X
+            "Monto Recaudado (S/)",             // Eje Y
+            dataset,                            // Dataset
+            PlotOrientation.VERTICAL,           // Orientación
+            false,                              // Leyenda
+            true,                               // Tooltips
+            false                               // URLs
+        );
+
+        // Personalización del gráfico
+        chart.setBackgroundPaint(Color.WHITE);
+        CategoryPlot plot = chart.getCategoryPlot();
+        plot.setBackgroundPaint(new Color(245, 245, 245));
+        plot.setDomainGridlinePaint(Color.WHITE);
+        plot.setRangeGridlinePaint(Color.LIGHT_GRAY);
+
+        // Color corporativo y ancho de barras
+        BarRenderer renderer = (BarRenderer) plot.getRenderer();
+        renderer.setSeriesPaint(0, new Color(202, 126, 16));
+        renderer.setMaximumBarWidth(0.35);
+
+        // Incrustar el gráfico en el panel contenedor
+        panelGrafico.setLayout(new BorderLayout());
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setBackground(Color.WHITE);
+        panelGrafico.removeAll();
+        panelGrafico.add(chartPanel, BorderLayout.CENTER);
+        panelGrafico.revalidate();
+        panelGrafico.repaint();
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -166,7 +340,9 @@ public class DashboardForm extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JLabel lblClientesRegistrados;
+    private javax.swing.JLabel lblProductosVencer;
     private javax.swing.JLabel lblStockBajoAlertas;
     private javax.swing.JLabel lblVentasDia;
     private javax.swing.JPanel panelGrafico;

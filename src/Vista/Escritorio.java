@@ -23,6 +23,9 @@ public class Escritorio extends javax.swing.JFrame {
         actualizarStatusBar();
         agregarMenuClientes();
         agregarMenuCompras();
+        
+        // Abrir el Dashboard automáticamente al inicio del sistema
+        abrirVentana(new DashboardForm());
     }
     
     private void configurarSegunRol() {
@@ -181,8 +184,17 @@ public class Escritorio extends javax.swing.JFrame {
                 return;
             }
         }
-    pEscritorio.add(ventana);
-    ventana.setVisible(true);
+        pEscritorio.add(ventana);
+        ventana.setVisible(true);
+        
+        // Si abrimos la pantalla del Dashboard, la maximizamos para que ocupe todo el espacio de trabajo disponible
+        if (ventana instanceof DashboardForm) {
+            try {
+                ventana.setMaximum(true);
+            } catch (java.beans.PropertyVetoException e) {
+                System.out.println("Error al intentar maximizar el Dashboard: " + e.getMessage());
+            }
+        }
     }
     
     
@@ -232,7 +244,8 @@ public class Escritorio extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu1MouseClicked
 
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
-        // TODO add your handling code here:
+        // Abrir ventana del Dashboard al hacer clic en el menú
+        abrirVentana(new DashboardForm());
     }//GEN-LAST:event_jMenu2MouseClicked
 
     private void agregarMenuClientes() {

@@ -18,13 +18,17 @@ public class BOTICA {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        //Crear el usuario administrador por defecto
+        // Inicializar el tema moderno FlatLaf Light para todo el sistema
+        try {
+            com.formdev.flatlaf.FlatIntelliJLaf.setup();
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar el tema visual FlatLaf: " + e.getMessage());
+        }
+
+        // Crear el usuario administrador por defecto si no existe
         crearUsuarioDefecto();
-        // 2. Abrir la pantalla de Login una sola vez de forma correcta
+        // Abrir la pantalla de Login
         java.awt.EventQueue.invokeLater(() -> { new Vista.login().setVisible(true);});
-        /*login loginn = new login();
-        loginn.setVisible(true);*/
     }
     
     
