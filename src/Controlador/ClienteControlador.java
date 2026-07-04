@@ -75,6 +75,6 @@ public class ClienteControlador {
     }
 
     public ArrayList<Cliente> listarTodos() {
-        return dao.leerTodos();
+        return dao.listarTodos();
     }
 }

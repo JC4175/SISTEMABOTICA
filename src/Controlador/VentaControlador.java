@@ -130,16 +130,13 @@ public class VentaControlador {
             return "No hay productos en la venta.";
 
         // Actualiza stock de cada medicamento vendido
-        ArrayList<Medicamento> lista = medDAO.leerTodos();
         for (DetalleVenta d : ventaActual.getDetalles()) {
-            for (Medicamento m : lista) {
-                if (m.getCodigo().equals(d.getCodigoMedicamento())) {
-                    m.actualizarStock(d.getCantidad());
-                    break;
-                }
+            Medicamento m = medDAO.buscarPorCodigo(d.getCodigoMedicamento());
+            if (m != null) {
+                m.actualizarStock(d.getCantidad());
+                medDAO.actualizar(m);
             }
         }
-        medDAO.guardarTodos(lista);
 
         // Guarda la venta
         ventaDAO.registrarVentaCompleta(ventaActual);

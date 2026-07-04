@@ -35,13 +35,13 @@ public class CategoriaControlador {
     }
 
     public ArrayList<Categoria> listarTodos() {
-        return ct.leerTodos();
+        return ct.listarTodos();
     }
 
     // Retorna solo los nombres para cargar en JComboBox
     public ArrayList<String> listarNombres() {
         ArrayList<String> nombres = new ArrayList<>();
-        for (Categoria c : ct.leerTodos()) {
+        for (Categoria c : ct.listarTodos()) {
             nombres.add(c.getNombre());
         }
         return nombres;

@@ -1,3 +1,0 @@
-V0001|MED001|Paracetamol|2|5.0|10.0|0.0
-V0001|MED004|Shampoo H&S|1|25.0|25.0|0.0
-V0002|MED004|Shampoo H&S|1|25.0|25.0|0.0

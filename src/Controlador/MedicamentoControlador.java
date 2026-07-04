@@ -105,7 +105,7 @@ public class MedicamentoControlador {
     }
 
     public ArrayList<Medicamento> listarTodos() {
-        return dao.leerTodos();
+        return dao.listarTodos();
     }
 
     public ArrayList<Medicamento> listarProximosVencer() {

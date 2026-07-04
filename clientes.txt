@@ -1,2 +1,0 @@
-C001|Li|Vasquez Marin|78965123545|si|true|si|Si
-74054413|Aaron|Salazar Valdez|74054413|aaron@gmail.com|false||Vida

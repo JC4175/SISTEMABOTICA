@@ -1,100 +1,134 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * CompraDatos.java - Capa de acceso a datos para Compra
+ * Reemplaza compras.txt por consultas SQL a SQLite
  */
 package Datos;
 
 import Modelo.Compra;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
-/**
- *
- * @author zakkc
- */
 public class CompraDatos {
-    
-    private static final String ARCHIVO = "compras.txt";
 
-    public void guardarTodos(ArrayList<Compra> lista) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO))) {
-            for (Compra c : lista) {
-                bw.write(c.toString());
-                bw.newLine();
-            }
-        } catch (IOException e) {
-            System.out.println("Error al guardar compras: " + e.getMessage());
+    /** Inserta una nueva orden de compra en la base de datos */
+    public void agregar(Compra c) {
+        String sql = "INSERT INTO Compra (IDcompra, fechaCompra, totalPagado, estadoOrden, cantidadComprada, codigoProveedor, codigoMedicamento) " +
+                     "VALUES (?,?,?,?,?,?,?)";
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, c.getIDcompra());
+            ps.setString(2, c.getFechaCompra());
+            ps.setDouble(3, c.getTotalPagado());
+            ps.setString(4, c.getEstadoOrden());
+            ps.setInt(5, c.getCantidadComprada());
+            ps.setString(6, c.getIdProveedor());
+            ps.setString(7, c.getCodigoMedicamento());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error al registrar compra: " + e.getMessage());
         }
     }
 
+    /** Retorna todas las órdenes de compra registradas */
     public ArrayList<Compra> leerTodos() {
         ArrayList<Compra> lista = new ArrayList<>();
-        File archivo = new File(ARCHIVO);
-        if (!archivo.exists()) return lista;
-
-        try (BufferedReader br = new BufferedReader(new FileReader(ARCHIVO))) {
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                if (!linea.trim().isEmpty()) {
-                    String[] datos = linea.split("\\|");
-                    if (datos.length >= 7) {
-                        lista.add(new Compra(
-                            datos[0], // IDcompra
-                            datos[1], // fechaCompra
-                            Double.parseDouble(datos[2]), // totalPagado
-                            datos[3], // estadoOrden
-                            Integer.parseInt(datos[4]), // cantidadComprada
-                            datos[5], // idProveedor
-                            datos[6]  // codigoMedicamento
-                        ));
-                    }
-                }
+        String sql = "SELECT * FROM Compra";
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                lista.add(new Compra(
+                    rs.getString("IDcompra"),
+                    rs.getString("fechaCompra"),
+                    rs.getDouble("totalPagado"),
+                    rs.getString("estadoOrden"),
+                    rs.getInt("cantidadComprada"),
+                    rs.getString("codigoProveedor") != null ? rs.getString("codigoProveedor") : "",
+                    rs.getString("codigoMedicamento") != null ? rs.getString("codigoMedicamento") : ""
+                ));
             }
-        } catch (IOException e) {
-            System.out.println("Error al leer compras: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Error al listar compras: " + e.getMessage());
         }
         return lista;
     }
 
-    public void agregar(Compra c) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO, true))) {
-            bw.write(c.toString());
-            bw.newLine();
-        } catch (IOException e) {
-            System.out.println("Error al agregar compra: " + e.getMessage());
-        }
-    }
-
+    /** Busca una compra por su ID único */
     public Compra buscarPorID(String idCompra) {
-        for (Compra c : leerTodos()) {
-            if (c.getIDcompra().equals(idCompra)) return c;
+        String sql = "SELECT * FROM Compra WHERE IDcompra = ?";
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, idCompra);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new Compra(
+                        rs.getString("IDcompra"),
+                        rs.getString("fechaCompra"),
+                        rs.getDouble("totalPagado"),
+                        rs.getString("estadoOrden"),
+                        rs.getInt("cantidadComprada"),
+                        rs.getString("codigoProveedor") != null ? rs.getString("codigoProveedor") : "",
+                        rs.getString("codigoMedicamento") != null ? rs.getString("codigoMedicamento") : ""
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al buscar compra: " + e.getMessage());
         }
         return null;
     }
 
+    /** Verifica si ya existe una compra con ese ID */
     public boolean existeCodigo(String idCompra) {
         return buscarPorID(idCompra) != null;
     }
 
-    public void eliminar(String idCompra) {
-        ArrayList<Compra> lista = leerTodos();
-        lista.removeIf(c -> c.getIDcompra().equals(idCompra));
-        guardarTodos(lista);
+    /** Actualiza el estado y datos de una compra (especialmente para marcarla como Recibida) */
+    public void actualizar(Compra c) {
+        String sql = "UPDATE Compra SET fechaCompra=?, totalPagado=?, estadoOrden=?, cantidadComprada=?, " +
+                     "codigoProveedor=?, codigoMedicamento=? WHERE IDcompra=?";
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, c.getFechaCompra());
+            ps.setDouble(2, c.getTotalPagado());
+            ps.setString(3, c.getEstadoOrden());
+            ps.setInt(4, c.getCantidadComprada());
+            ps.setString(5, c.getIdProveedor());
+            ps.setString(6, c.getCodigoMedicamento());
+            ps.setString(7, c.getIDcompra());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar compra: " + e.getMessage());
+        }
     }
 
-    public void actualizar(Compra actualizado) {
-        ArrayList<Compra> lista = leerTodos();
-        for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).getIDcompra().equals(actualizado.getIDcompra())) {
-                lista.set(i, actualizado);
-                break;
-            }
+    /** Elimina una compra por su ID */
+    public void eliminar(String idCompra) {
+        String sql = "DELETE FROM Compra WHERE IDcompra = ?";
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, idCompra);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar compra: " + e.getMessage());
         }
-        guardarTodos(lista);
+    }
+
+    /** Genera el siguiente ID de compra automáticamente (CO006, CO007...) */
+    public String generarNuevoID() {
+        String sql = "SELECT COUNT(*) AS total FROM Compra";
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return "CO" + String.format("%03d", rs.getInt("total") + 1);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al generar ID de compra: " + e.getMessage());
+        }
+        return "CO001";
     }
 }

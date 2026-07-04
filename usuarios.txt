@@ -1,2 +1,0 @@
-admin|Administrador Fabiana||||Administrador Fabiana|admin123|Titular Gerente|true
-tecfar|Angela||||Angela|tecfar123|Técnico en Farmacia|true

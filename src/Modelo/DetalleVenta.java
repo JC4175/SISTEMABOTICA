@@ -42,7 +42,8 @@ public class DetalleVenta {
     }
     
     public void guardarVentas(java.util.ArrayList<Venta> lista) {
-        new Datos.VentaDatos().guardarTodos(lista);
+        // DESHABILITADO: VentaDatos.guardarTodos() fue eliminado al migrar a SQLite
+        // new Datos.VentaDatos().guardarTodos(lista);
     }
 
     public String getCodigoMedicamento() {

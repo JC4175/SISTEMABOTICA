@@ -74,6 +74,6 @@ public class ProveedorControlador {
     }
 
     public ArrayList<Proveedor> listarTodos() {
-        return dao.leerTodos();
+        return dao.listarTodos();
     }
 }
