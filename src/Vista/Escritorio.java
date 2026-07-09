@@ -175,26 +175,14 @@ public class Escritorio extends javax.swing.JFrame {
     //-------------------------------------METODOS PARA LLAMAR A LAS VENTANAS :)
     private void abrirVentana(javax.swing.JInternalFrame ventana) 
     {
+        // Cierra todas las ventanas abiertas antes de abrir una nueva
         for (javax.swing.JInternalFrame v : pEscritorio.getAllFrames()) 
         {
-            if (v.getClass() == ventana.getClass()) 
-            {
-                v.toFront();
-                try { v.setSelected(true); } catch (Exception e) {}
-                return;
-            }
+            v.dispose();
         }
+        
         pEscritorio.add(ventana);
         ventana.setVisible(true);
-        
-        // Si abrimos la pantalla del Dashboard, la maximizamos para que ocupe todo el espacio de trabajo disponible
-        if (ventana instanceof DashboardForm) {
-            try {
-                ventana.setMaximum(true);
-            } catch (java.beans.PropertyVetoException e) {
-                System.out.println("Error al intentar maximizar el Dashboard: " + e.getMessage());
-            }
-        }
     }
     
     
