@@ -17,6 +17,10 @@ public class login extends javax.swing.JFrame {
      */
     public login() {
         initComponents();
+        // Centrar la ventana en la pantalla
+        this.setLocationRelativeTo(null);
+        // Hacer que la tecla Enter active el botón de Iniciar Sesión
+        this.getRootPane().setDefaultButton(btnIniciarsesion);
     }
 
     /**

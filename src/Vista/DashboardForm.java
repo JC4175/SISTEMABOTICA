@@ -7,11 +7,11 @@ package Vista;
 import Controlador.ClienteControlador;
 import Controlador.MedicamentoControlador;
 import Controlador.VentaControlador;
-import Modelo.Cliente;
 import Modelo.Medicamento;
 import Modelo.Venta;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -55,10 +55,15 @@ public class DashboardForm extends javax.swing.JInternalFrame {
         lblClientesRegistrados = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         lblStockBajoAlertas = new javax.swing.JLabel();
-        panelGrafico = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         lblProductosVencer = new javax.swing.JLabel();
+        cmbPeriodo = new javax.swing.JComboBox<>();
+        dcFechaInicio = new com.toedter.calendar.JDateChooser();
+        dcFechaFin = new com.toedter.calendar.JDateChooser();
+        btnAplicarRango = new javax.swing.JButton();
+        lblPeriodoActivo = new javax.swing.JLabel();
+        panelGrafico = new javax.swing.JPanel();
 
         setClosable(true);
         setMaximizable(true);
@@ -74,7 +79,7 @@ public class DashboardForm extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblVentasDia, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                .addComponent(lblVentasDia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -94,14 +99,14 @@ public class DashboardForm extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblClientesRegistrados, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                .addComponent(lblClientesRegistrados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblClientesRegistrados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblClientesRegistrados, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -113,28 +118,15 @@ public class DashboardForm extends javax.swing.JInternalFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblStockBajoAlertas, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                .addComponent(lblStockBajoAlertas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblStockBajoAlertas, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                .addComponent(lblStockBajoAlertas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-        );
-
-        panelGrafico.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout panelGraficoLayout = new javax.swing.GroupLayout(panelGrafico);
-        panelGrafico.setLayout(panelGraficoLayout);
-        panelGraficoLayout.setHorizontalGroup(
-            panelGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 821, Short.MAX_VALUE)
-        );
-        panelGraficoLayout.setVerticalGroup(
-            panelGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 468, Short.MAX_VALUE)
         );
 
         jPanel5.setBackground(new java.awt.Color(246, 178, 107));
@@ -147,7 +139,7 @@ public class DashboardForm extends javax.swing.JInternalFrame {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 54, Short.MAX_VALUE)
+            .addGap(0, 24, Short.MAX_VALUE)
         );
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
@@ -158,15 +150,35 @@ public class DashboardForm extends javax.swing.JInternalFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblProductosVencer, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                .addComponent(lblProductosVencer, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblProductosVencer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblProductosVencer, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
                 .addContainerGap())
+        );
+
+        cmbPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbPeriodo.addActionListener(this::cmbPeriodoActionPerformed);
+
+        btnAplicarRango.setText("Aplicar");
+
+        lblPeriodoActivo.setForeground(new java.awt.Color(255, 255, 255));
+
+        panelGrafico.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout panelGraficoLayout = new javax.swing.GroupLayout(panelGrafico);
+        panelGrafico.setLayout(panelGraficoLayout);
+        panelGraficoLayout.setHorizontalGroup(
+            panelGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        panelGraficoLayout.setVerticalGroup(
+            panelGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 269, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -174,34 +186,56 @@ public class DashboardForm extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(panelGrafico, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblPeriodoActivo, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cmbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                            .addComponent(dcFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(dcFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(panelGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAplicarRango, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(283, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dcFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(7, 7, 7)
+                        .addComponent(lblPeriodoActivo, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dcFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAplicarRango))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
         );
@@ -211,130 +245,255 @@ public class DashboardForm extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    // Método para inicializar los datos y cargar las métricas y gráficos
+    private void cmbPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPeriodoActionPerformed
+        // Manejado por el listener agregado programáticamente en inicializarDashboard()
+    }//GEN-LAST:event_cmbPeriodoActionPerformed
+
+
     private void inicializarDashboard() {
-        // --- RECONFIGURACIÓN DE DISEÑO RESPONSIVO (PROGRAMÁTICO) ---
-        // Creamos una fila uniforme de 4 columnas para que las tarjetas se distribuyan equitativamente
-        javax.swing.JPanel panelCards = new javax.swing.JPanel(new java.awt.GridLayout(1, 4, 15, 0));
-        panelCards.setBackground(jPanel1.getBackground());
-        panelCards.add(jPanel2);
-        panelCards.add(jPanel3);
-        panelCards.add(jPanel4);
-        panelCards.add(jPanel6);
 
-        // Creamos un contenedor central con BorderLayout para organizar los KPIs arriba y el gráfico abajo
-        javax.swing.JPanel panelCentro = new javax.swing.JPanel(new java.awt.BorderLayout(0, 20));
-        panelCentro.setBackground(jPanel1.getBackground());
-        panelCentro.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Margen alrededor del panel
+        // --- CONFIGURAR ITEMS DEL COMBOBOX DE PERÍODO ---
+        cmbPeriodo.removeAllItems();
+        cmbPeriodo.addItem("Hoy");
+        cmbPeriodo.addItem("Ayer");
+        cmbPeriodo.addItem("Últimos 7 días");
+        cmbPeriodo.addItem("Este mes");
+        cmbPeriodo.addItem("Mes anterior");
+        cmbPeriodo.addItem("Rango personalizado");
+        cmbPeriodo.setSelectedItem("Últimos 7 días"); // Selección por defecto
 
-        panelCentro.add(panelCards, java.awt.BorderLayout.NORTH);
-        panelCentro.add(panelGrafico, java.awt.BorderLayout.CENTER);
+        // Deshabilitar controles de rango personalizado al inicio (no ocultar para evitar deformar el layout)
+        dcFechaInicio.setEnabled(false);
+        dcFechaFin.setEnabled(false);
+        btnAplicarRango.setEnabled(false);
 
-        // Reconfiguramos el contenedor principal (jPanel1) con BorderLayout para un ajuste dinámico responsivo
-        jPanel1.removeAll();
-        jPanel1.setLayout(new java.awt.BorderLayout());
-        jPanel1.add(jPanel5, java.awt.BorderLayout.NORTH);
-        jPanel1.add(panelCentro, java.awt.BorderLayout.CENTER);
+        // Actualizar evento del ComboBox para habilitar/deshabilitar controles de rango
+        cmbPeriodo.removeActionListener(null);
+        cmbPeriodo.addActionListener(e -> {
+            String sel = (String) cmbPeriodo.getSelectedItem();
+            boolean esRango = "Rango personalizado".equals(sel);
+            dcFechaInicio.setEnabled(esRango);
+            dcFechaFin.setEnabled(esRango);
+            btnAplicarRango.setEnabled(esRango);
+            if (!esRango) aplicarFiltro(sel);
+        });
 
-        // 1. Instanciar controladores para acceder a los datos reales
-        VentaControlador ctrlVenta = new VentaControlador();
+        // Evento botón Aplicar rango personalizado
+        btnAplicarRango.addActionListener(e -> {
+            Date desde = dcFechaInicio.getDate();
+            Date hasta = dcFechaFin.getDate();
+            if (desde == null || hasta == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "⚠ Seleccione ambas fechas.", "Rango incompleto", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if (desde.after(hasta)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "⚠ La fecha de inicio no puede ser mayor que la fecha final.", "Rango inválido", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+            String etiqueta = "Rango: " + sdf.format(desde) + " → " + sdf.format(hasta);
+            actualizarTarjetas(desde, hasta);
+            actualizarGrafico(desde, hasta, etiqueta);
+            lblPeriodoActivo.setText("📅 Mostrando: " + etiqueta);
+        });
+
+        // --- DATOS ESTÁTICOS (no cambian con el período) ---
         ClienteControlador ctrlCliente = new ClienteControlador();
         MedicamentoControlador ctrlMedicamento = new MedicamentoControlador();
 
-        // 2. Calcular Ventas del Día (recorremos todas y comparamos con la fecha de hoy)
-        double totalHoy = 0.0;
-        String fechaHoy = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
-        for (Venta v : ctrlVenta.listarTodas()) {
-            if (v.getFechaVenta().equals(fechaHoy)) {
-                totalHoy += v.getTotal();
-            }
-        }
-        // Configurar el texto de la tarjeta con formato HTML para diseño premium
-        lblVentasDia.setText("<html><center><font size='4' color='#555555'><b>Ventas de Hoy</b></font><br><br><font size='6' color='#2e7d32'><b>S/ " + String.format("%.2f", totalHoy) + "</b></font></center></html>");
-        lblVentasDia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-        // 3. Contar Clientes Registrados
         int cantClientes = ctrlCliente.listarTodos().size();
         lblClientesRegistrados.setText("<html><center><font size='4' color='#555555'><b>Clientes Registrados</b></font><br><br><font size='6' color='#1565c0'><b>" + cantClientes + "</b></font></center></html>");
         lblClientesRegistrados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        // 4. Contar Medicamentos con Stock Bajo (llegaron al stock mínimo)
         int alertasStock = 0;
         for (Medicamento m : ctrlMedicamento.listarTodos()) {
-            if (m.stockBajo()) {
-                alertasStock++;
-            }
+            if (m.stockBajo()) alertasStock++;
         }
         lblStockBajoAlertas.setText("<html><center><font size='4' color='#555555'><b>Alertas de Stock Bajo</b></font><br><br><font size='6' color='#c62828'><b>" + alertasStock + "</b></font></center></html>");
         lblStockBajoAlertas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        // 4.5 Contar Medicamentos Próximos a Vencer (en un plazo de 30 días)
         int proximosVencer = ctrlMedicamento.contarProximosVencer();
         lblProductosVencer.setText("<html><center><font size='4' color='#555555'><b>Próximos a Vencer</b></font><br><br><font size='6' color='#d84315'><b>" + proximosVencer + "</b></font></center></html>");
         lblProductosVencer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        // 5. Generar Gráfico de Barras de Ventas de los Últimos 7 Días
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM");
-        SimpleDateFormat sdfCompleto = new SimpleDateFormat("dd/MM/yyyy");
+        // Cargar período por defecto
+        aplicarFiltro("Últimos 7 días");
+    }
 
-        // Creamos un mapa con las ventas por fecha para optimizar búsquedas
+
+    /**
+     * Calcula el rango de fechas según la opción del ComboBox y delega
+     * la actualización al gráfico y a las tarjetas dinámicas.
+     */
+    private void aplicarFiltro(String opcion) {
+        Calendar cal = Calendar.getInstance();
+        Date hasta = cal.getTime(); // Por defecto: hoy
+        Date desde;
+        String etiqueta;
+
+        switch (opcion) {
+            case "Hoy":
+                desde = truncarHora(cal.getTime());
+                hasta = desde;
+                etiqueta = "Hoy";
+                break;
+            case "Ayer":
+                cal.add(Calendar.DAY_OF_YEAR, -1);
+                desde = truncarHora(cal.getTime());
+                hasta = desde;
+                etiqueta = "Ayer";
+                break;
+            case "Este mes":
+                cal.set(Calendar.DAY_OF_MONTH, 1);
+                desde = truncarHora(cal.getTime());
+                hasta = new Date();
+                etiqueta = "Este mes";
+                break;
+            case "Mes anterior":
+                cal.add(Calendar.MONTH, -1);
+                cal.set(Calendar.DAY_OF_MONTH, 1);
+                desde = truncarHora(cal.getTime());
+                cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+                hasta = truncarHora(cal.getTime());
+                etiqueta = "Mes anterior";
+                break;
+            default: // Últimos 7 días
+                cal.add(Calendar.DAY_OF_YEAR, -6);
+                desde = truncarHora(cal.getTime());
+                hasta = new Date();
+                etiqueta = "Últimos 7 días";
+                break;
+        }
+
+        actualizarTarjetas(desde, hasta);
+        actualizarGrafico(desde, hasta, etiqueta);
+        lblPeriodoActivo.setText("📅 Mostrando: " + etiqueta);
+    }
+
+    /**
+     * Actualiza la tarjeta de "Ventas del período" sumando las ventas
+     * cuya fecha está dentro del rango [desde, hasta].
+     */
+    private void actualizarTarjetas(Date desde, Date hasta) {
+        VentaControlador ctrlVenta = new VentaControlador();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        double totalPeriodo = 0.0;
+
+        for (Venta v : ctrlVenta.listarTodas()) {
+            try {
+                Date fechaVenta = sdf.parse(v.getFechaVenta());
+                if (!fechaVenta.before(truncarHora(desde)) && !fechaVenta.after(truncarHora(hasta))) {
+                    totalPeriodo += v.getTotal();
+                }
+            } catch (ParseException ignored) {}
+        }
+
+        lblVentasDia.setText("<html><center><font size='4' color='#555555'><b>Ventas del Período</b></font><br><br><font size='6' color='#2e7d32'><b>S/ " + String.format("%.2f", totalPeriodo) + "</b></font></center></html>");
+        lblVentasDia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    }
+
+    /**
+     * Regenera el gráfico de barras mostrando los días del rango seleccionado.
+     * Si el rango supera los 31 días, agrupa por semana para mayor legibilidad.
+     */
+    private void actualizarGrafico(Date desde, Date hasta, String tituloExtra) {
+        VentaControlador ctrlVenta = new VentaControlador();
+        SimpleDateFormat sdfCompleto = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdfEtiqueta = new SimpleDateFormat("dd/MM");
+
+        // Construir mapa fecha → total vendido
         HashMap<String, Double> ventasPorFecha = new HashMap<>();
         for (Venta v : ctrlVenta.listarTodas()) {
-            ventasPorFecha.put(v.getFechaVenta(), ventasPorFecha.getOrDefault(v.getFechaVenta(), 0.0) + v.getTotal());
+            ventasPorFecha.merge(v.getFechaVenta(), v.getTotal(), Double::sum);
         }
 
-        // Retrocedemos 7 días en el calendario para llenar las barras secuencialmente
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DAY_OF_YEAR, -6); // Hace 6 días
-        
-        for (int i = 0; i < 7; i++) {
-            Date d = cal.getTime();
-            String claveFecha = sdfCompleto.format(d);
-            String etiquetaFecha = sdf.format(d);
-            double totalDia = ventasPorFecha.getOrDefault(claveFecha, 0.0);
-            
-            // Agregar valor al dataset de JFreeChart
-            dataset.addValue(totalDia, "Ventas", etiquetaFecha);
-            cal.add(Calendar.DAY_OF_YEAR, 1); // Avanzar 1 día
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        long diffMs = hasta.getTime() - desde.getTime();
+        long diffDias = diffMs / (1000 * 60 * 60 * 24) + 1;
+
+        Calendar cur = Calendar.getInstance();
+        cur.setTime(truncarHora(desde));
+
+        if (diffDias <= 31) {
+            // Modo día a día
+            while (!cur.getTime().after(truncarHora(hasta))) {
+                String clave = sdfCompleto.format(cur.getTime());
+                String etiq  = sdfEtiqueta.format(cur.getTime());
+                dataset.addValue(ventasPorFecha.getOrDefault(clave, 0.0), "Ventas", etiq);
+                cur.add(Calendar.DAY_OF_YEAR, 1);
+            }
+        } else {
+            // Modo semanal: agrupar cada 7 días
+            SimpleDateFormat sdfSem = new SimpleDateFormat("'Sem' W/MM");
+            while (!cur.getTime().after(truncarHora(hasta))) {
+                double totalSemana = 0.0;
+                String etiqSem = sdfSem.format(cur.getTime());
+                for (int d = 0; d < 7; d++) {
+                    String clave = sdfCompleto.format(cur.getTime());
+                    totalSemana += ventasPorFecha.getOrDefault(clave, 0.0);
+                    cur.add(Calendar.DAY_OF_YEAR, 1);
+                    if (cur.getTime().after(truncarHora(hasta))) break;
+                }
+                dataset.addValue(totalSemana, "Ventas", etiqSem);
+            }
         }
 
-        // Crear el gráfico de barras interactivo
+        // Crear y personalizar el gráfico
         JFreeChart chart = ChartFactory.createBarChart(
-            "Ventas de los Últimos 7 Días",    // Título
-            "Día / Fecha",                      // Eje X
-            "Monto Recaudado (S/)",             // Eje Y
-            dataset,                            // Dataset
-            PlotOrientation.VERTICAL,           // Orientación
-            false,                              // Leyenda
-            true,                               // Tooltips
-            false                               // URLs
+            "Ventas — " + tituloExtra,
+            "Período",
+            "Monto (S/)",
+            dataset,
+            PlotOrientation.VERTICAL,
+            false, true, false
         );
-
-        // Personalización del gráfico
         chart.setBackgroundPaint(Color.WHITE);
         CategoryPlot plot = chart.getCategoryPlot();
         plot.setBackgroundPaint(new Color(245, 245, 245));
         plot.setDomainGridlinePaint(Color.WHITE);
         plot.setRangeGridlinePaint(Color.LIGHT_GRAY);
-
-        // Color corporativo y ancho de barras
+        
+        // Evitar números microscópicos (E-9) cuando todo es 0
+        org.jfree.chart.axis.NumberAxis rangeAxis = (org.jfree.chart.axis.NumberAxis) plot.getRangeAxis();
+        rangeAxis.setAutoRangeIncludesZero(true);
+        // rangeAxis.setLowerBound(0.0); // opcional, pero con setAutoRangeIncludesZero basta
+        
         BarRenderer renderer = (BarRenderer) plot.getRenderer();
         renderer.setSeriesPaint(0, new Color(202, 126, 16));
         renderer.setMaximumBarWidth(0.35);
 
-        // Incrustar el gráfico en el panel contenedor
-        panelGrafico.setLayout(new BorderLayout());
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setBackground(Color.WHITE);
+        
+        // ¡CRUCIAL PARA NETBEANS! Conservar el tamaño original de panelGrafico
+        // para que ChartPanel no lo encoja ni deforme el diseño de GroupLayout
+        java.awt.Dimension dimOriginal = panelGrafico.getPreferredSize();
+        chartPanel.setPreferredSize(dimOriginal);
+
+        panelGrafico.setLayout(new BorderLayout());
         panelGrafico.removeAll();
         panelGrafico.add(chartPanel, BorderLayout.CENTER);
         panelGrafico.revalidate();
         panelGrafico.repaint();
     }
 
+    /** Elimina la hora de una fecha dejando solo año/mes/día a las 00:00:00 */
+    private Date truncarHora(Date fecha) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(fecha);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+        return c.getTime();
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAplicarRango;
+    private javax.swing.JComboBox<String> cmbPeriodo;
+    private com.toedter.calendar.JDateChooser dcFechaFin;
+    private com.toedter.calendar.JDateChooser dcFechaInicio;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -342,6 +501,7 @@ public class DashboardForm extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JLabel lblClientesRegistrados;
+    private javax.swing.JLabel lblPeriodoActivo;
     private javax.swing.JLabel lblProductosVencer;
     private javax.swing.JLabel lblStockBajoAlertas;
     private javax.swing.JLabel lblVentasDia;
