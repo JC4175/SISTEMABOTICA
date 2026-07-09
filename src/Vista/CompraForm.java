@@ -12,6 +12,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -34,6 +40,7 @@ public class CompraForm extends javax.swing.JInternalFrame {
         // Registrar listeners de eventos
         btnRegistrar.addActionListener(e -> btnRegistrarActionPerformed());
         btnRecibirMercadería.addActionListener(e -> btnRecibirActionPerformed());
+        btnGenerarRepo.addActionListener(e -> btnGenerarReporteActionPerformed());
         
         // Restricciones de teclado directas (UX)
         txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -74,6 +81,7 @@ public class CompraForm extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         cmbMedicamento = new javax.swing.JComboBox<>();
         cmbProveedor = new javax.swing.JComboBox<>();
@@ -85,7 +93,9 @@ public class CompraForm extends javax.swing.JInternalFrame {
         tblCompras = new javax.swing.JTable();
         btnRegistrar = new javax.swing.JButton();
         btnRecibirMercadería = new javax.swing.JButton();
+        btnGenerarRepo = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(0, 102, 0));
         setClosable(true);
 
         jLabel1.setText("Medicamento");
@@ -94,15 +104,27 @@ public class CompraForm extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Cantidad");
 
+        jPanel1.setBackground(new java.awt.Color(62, 97, 88));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("COMPRA DE MEDICAMENTOS");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addGap(225, 225, 225))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 51, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel6)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jLabel4.setText("Total Pagado");
@@ -128,9 +150,18 @@ public class CompraForm extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tblCompras);
 
+        btnRegistrar.setBackground(new java.awt.Color(79, 123, 138));
+        btnRegistrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrar.setText("Registrar");
 
+        btnRecibirMercadería.setBackground(new java.awt.Color(255, 255, 102));
+        btnRecibirMercadería.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnRecibirMercadería.setText("Recibir Mercadería");
+
+        btnGenerarRepo.setBackground(new java.awt.Color(244, 211, 94));
+        btnGenerarRepo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnGenerarRepo.setText("Generar Reporte TXT");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -141,29 +172,37 @@ public class CompraForm extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel2)
-                    .addComponent(btnRegistrar)
-                    .addComponent(jLabel5))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(btnRegistrar)))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtTotal)
+                    .addComponent(cmbEstado, 0, 204, Short.MAX_VALUE)
+                    .addComponent(cmbProveedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtCantidad)
+                    .addComponent(cmbMedicamento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnRecibirMercadería)
+                        .addGap(13, 13, 13)))
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnRecibirMercadería)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtTotal)
-                            .addComponent(cmbEstado, 0, 204, Short.MAX_VALUE)
-                            .addComponent(cmbProveedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtCantidad)
-                            .addComponent(cmbMedicamento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(43, 43, 43)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27))))
+                        .addGap(27, 27, 27))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnGenerarRepo)
+                        .addGap(165, 165, 165))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,8 +235,9 @@ public class CompraForm extends javax.swing.JInternalFrame {
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrar)
-                    .addComponent(btnRecibirMercadería))
-                .addContainerGap(18, Short.MAX_VALUE))
+                    .addComponent(btnRecibirMercadería)
+                    .addComponent(btnGenerarRepo))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
@@ -295,8 +335,60 @@ public class CompraForm extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, resultado, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+    private void btnGenerarReporteActionPerformed() {
+        int fila = tblCompras.getSelectedRow();
+        if (fila < 0) {
+            JOptionPane.showMessageDialog(this, "Seleccione una compra de la tabla para generar el reporte.", "Generar Reporte", JOptionPane.WARNING_MESSAGE);
+            return;
+    }
+
+    String idCompra    = String.valueOf(modeloTabla.getValueAt(fila, 0));
+    String fecha       = String.valueOf(modeloTabla.getValueAt(fila, 1));
+    String medicamento = String.valueOf(modeloTabla.getValueAt(fila, 2));
+    String proveedor   = String.valueOf(modeloTabla.getValueAt(fila, 3));
+    String cantidad    = String.valueOf(modeloTabla.getValueAt(fila, 4));
+    String total       = String.valueOf(modeloTabla.getValueAt(fila, 5));
+    String estado      = String.valueOf(modeloTabla.getValueAt(fila, 6));
+
+    String contenido =
+            "===================================\n" +
+            "   REPORTE DE COMPRA - FARMACIA ABISAI\n" +
+            "===================================\n\n" +
+            "ID de Compra   : " + idCompra + "\n" +
+            "Fecha          : " + fecha + "\n" +
+            "Medicamento    : " + medicamento + "\n" +
+            "Proveedor      : " + proveedor + "\n" +
+            "Cantidad       : " + cantidad + "\n" +
+            "Total Pagado   : " + total + "\n" +
+            "Estado         : " + estado + "\n\n" +
+            "-----------------------------------\n" +
+            "Reporte generado automáticamente\n";
+
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Guardar Reporte de Compra");
+    fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos de texto (*.txt)", "txt"));
+    fileChooser.setSelectedFile(new File("Reporte_Compra_" + idCompra + ".txt"));
+
+    int seleccion = fileChooser.showSaveDialog(this);
+    if (seleccion != JFileChooser.APPROVE_OPTION) {
+        return;
+    }
+
+    File archivo = fileChooser.getSelectedFile();
+    if (!archivo.getName().toLowerCase().endsWith(".txt")) {
+        archivo = new File(archivo.getParentFile(), archivo.getName() + ".txt");
+    }
+
+    try (PrintWriter writer = new PrintWriter(new FileWriter(archivo))) {
+        writer.print(contenido);
+        JOptionPane.showMessageDialog(this, "✅ Reporte guardado en:\n" + archivo.getAbsolutePath());
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(this, "❌ Error al guardar el reporte:\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGenerarRepo;
     private javax.swing.JButton btnRecibirMercadería;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JComboBox<String> cmbEstado;
@@ -307,6 +399,7 @@ public class CompraForm extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblCompras;
